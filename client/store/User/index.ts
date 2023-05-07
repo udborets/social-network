@@ -1,13 +1,31 @@
 import { makeAutoObservable } from "mobx";
 
 export class User {
-  id: number = 0;
+  id: string = "";
+  username: string = "";
+  email: string = "";
   isAuthed: boolean = false;
 
-  setIsAuthed(isAuthed: boolean) {
+  setState({
+    id,
+    username,
+    email,
+    isAuthed,
+  }: {
+    id: string;
+    username: string;
+    email: string;
+    isAuthed: boolean;
+  }) {
+    this.email = email;
+    this.id = id;
+    this.username = username;
     this.isAuthed = isAuthed;
   }
 
+  getSelf() {
+    return this;
+  }
   constructor() {
     makeAutoObservable(this);
   }
