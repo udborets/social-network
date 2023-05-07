@@ -9,20 +9,23 @@ datasource db {
 }
 
 model User {
-  id    String @id @unique @default(uuid())
-  name  String @unique
-  email String @unique
+  id    String  @id @unique @default(uuid())
+  name  String  @unique
+  email String  @unique
+  posts Posts[]
 }
 
 model Posts {
-  id        Int     @id
-  likes     Int     @default(0)
-  text      String?
-  image_url String?
+  id       String  @id @default(uuid())
+  owner    User    @relation(fields: [ownerId], references: [id])
+  ownerId  String
+  likes    Int     @default(0)
+  text     String?
+  imageUrl String?
 }
 
 model Friends {
-  id        String @id @default(uuid())
-  user_id   String
-  friend_id String
+  id       String @id @default(uuid())
+  userId   String
+  friendId String
 }
