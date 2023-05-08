@@ -9,13 +9,13 @@ datasource db {
 }
 
 model User {
-  id    String  @id @unique @default(uuid())
-  name  String  @unique
-  email String  @unique
-  posts Posts[]
+  id    String @id @unique @default(uuid())
+  name  String @unique
+  email String @unique
+  posts Post[]
 }
 
-model Posts {
+model Post {
   id       String  @id @default(uuid())
   owner    User    @relation(fields: [ownerId], references: [id])
   ownerId  String
