@@ -1,8 +1,10 @@
-import { userState } from "@/store/User"
-import { observer } from "mobx-react-lite"
-import Link from "next/link"
+import { observer } from "mobx-react-lite";
+import Link from "next/link";
+import { FC } from "react";
 
-const BackToMyPageButton = observer(() => {
+import { userState } from "@/store/User";
+
+const BackToMyPageButton: FC = observer(() => {
   return (
     <div className="flex flex-col gap-5 justify-center items-center rounded-[20px]">
       <Link

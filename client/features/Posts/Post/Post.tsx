@@ -1,11 +1,14 @@
-import { DBPost } from "@/db/models"
-import { userState } from "@/store/User";
 import axios from "axios";
-import { ChangeEvent, FC, useEffect, useState } from "react"
-import { useDebounce } from "usehooks-ts"
 import Image from "next/image";
+import { ChangeEvent, FC, useEffect, useState } from "react";
+import { useDebounce } from "usehooks-ts";
+
+import avatarImage from '@/assets/avatarImage.png';
+import { DBPost } from "@/db/models";
+import { userState } from "@/store/User";
+
 const Post: FC<DBPost> = (
-  { id, likes, ownerId, imageUrl, likedBy, text }
+  { id, imageUrl, likedBy, text, owner }
 ) => {
   const [value, setValue] = useState<boolean>(likedBy.includes(userState.info.id));
   const debouncedValue = useDebounce<boolean>(value, 500)
@@ -23,33 +26,40 @@ const Post: FC<DBPost> = (
         newLikedByList.push(userState.info.id);
       }
       setCurrentLikedBy(newLikedByList);
-      axios.post<{ post: DBPost }>(
-        (process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + '/posts/update',
-        { likedBy: newLikedByList, id: id }).then(({ data }) => {
-          console.log(data)
-          setCurrentLikedBy(data.post.likedBy);
-        });
+      axios
+        .post<{ post: DBPost }>((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + '/posts/update', { likedBy: newLikedByList, id: id })
+        .then(({ data }) => setCurrentLikedBy(data.post.likedBy));
     }
     if (init) {
       setInit(false);
     }
   }, [debouncedValue])
   return (
-    <div className="w-full max-w-[300px] bg-grey outline text-white outline-[var(--blue)]">
-      <label htmlFor="like" className="checked:bg-blue">
-        haha
-        <input
-          type='checkbox'
-          name="like"
-          className="checked:bg-blue"
-          checked={value}
-          onChange={() => setValue(prev => !prev)}
-        />
-      </label>
-      {currentLikedBy?.length ?? 0}
+    <div className="rounded-[20px] p-4 w-full max-w-[300px] outline text-black outline-[var(--blue)] flex flex-col gap-4 items-center">
+      <h4 className="font-bold text-center w-full text-[1.2rem]">{owner.name}</h4>
+      <Image
+        src={owner.avatarUrl ?? avatarImage}
+        alt="avatar image"
+        className="w-[70px] h-[70px] rounded-[50%] self-center"
+        width={70}
+        height={70}
+      />
+      <p className="mt-[20px] max-w-[90%] text-center">{text}</p>
       {imageUrl
         ? <Image src={imageUrl} alt='post image' width={70} height={70} />
         : ''}
+      <div className="flex gap-4">
+        <label htmlFor="like" className="checked:bg-blue">
+          <input
+            type='checkbox'
+            name="like"
+            className="checked:bg-blue"
+            checked={value}
+            onChange={() => setValue(prev => !prev)}
+          />
+        </label>
+        {currentLikedBy?.length ?? 0}
+      </div>
     </div>
   )
 }

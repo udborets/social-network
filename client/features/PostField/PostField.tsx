@@ -1,13 +1,14 @@
-import { storage } from "@/firebase";
-import { userState } from "@/store/User";
 import axios from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
-import { useForm } from "react-hook-form"
+import { FC, useState } from "react";
+import { useForm } from "react-hook-form";
 import { v4 } from "uuid";
 
-const PostField = observer(() => {
+import { storage } from "@/firebase";
+import { userState } from "@/store/User";
+
+const PostField: FC = observer(() => {
   const [chosenFile, setChosenFile] = useState<File>();
   const {
     register,
@@ -30,8 +31,7 @@ const PostField = observer(() => {
       if (text || imageUrl) {
         const createdPost = await axios.post(backendUrl + "/posts/create",
           { ownerId: userState.info.id, imageUrl: imageUrl, text: text });
-        console.log(createdPost);
-        console.log(text)
+        reset();
       }
     }
     catch (e) {
@@ -43,16 +43,11 @@ const PostField = observer(() => {
       onSubmit={handleSubmit(submit)}
       className="flex flex-col gap-2"
     >
-      <label
-        htmlFor=""
-        className="flex flex-col"
-      >
-        haha
-        <textarea
-          className="outline-1 outline"
-          {...register('text')}
-        />
-      </label>
+      <textarea
+        placeholder="Enter post text text..."
+        className="outline-1 outline max-w-[400px] "
+        {...register('text')}
+      />
       <label htmlFor="">
         <input
           onChange={(e: any) => setChosenFile(e.target.files[0])}
@@ -62,7 +57,7 @@ const PostField = observer(() => {
       </label>
       <input
         className=""
-        value='hha'
+        value='Post!'
         type="submit"
       />
     </form>

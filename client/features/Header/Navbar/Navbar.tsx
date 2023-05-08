@@ -1,8 +1,9 @@
-import { FC } from "react"
-import { NavbarProps } from "./models"
-import NavLink from "./NavLink/NavLink"
-import { observer } from "mobx-react-lite"
-import { userState } from "@/store/User"
+import { observer } from "mobx-react-lite";
+import { FC } from "react";
+
+import { userState } from "@/store/User";
+import { NavbarProps } from "./models";
+import NavLink from "./NavLink/NavLink";
 
 const Navbar: FC<NavbarProps> = observer(({ navLinks }) => {
   return (

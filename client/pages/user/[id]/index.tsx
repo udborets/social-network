@@ -1,16 +1,15 @@
-'use client'
-
 import axios from "axios";
 import { observer } from "mobx-react-lite";
-import Link from "next/link";
-import { useRouter } from "next/router"
+import { useRouter } from "next/router";
+import { FC } from "react";
 import { useQuery } from "react-query";
-import { DBUser } from "@/db/models";
-import { userState } from "@/store/User";
-import PostField from "@/features/PostField/PostField";
-import BackToMyPageButton from "@/features/BackToMyPageButton/BackToMyPageButton";
 
-const UserIdPage = observer(() => {
+import { DBUser } from "@/db/models";
+import BackToMyPageButton from "@/features/BackToMyPageButton/BackToMyPageButton";
+import PostField from "@/features/PostField/PostField";
+import { userState } from "@/store/User";
+
+const UserIdPage: FC = observer(() => {
   const router = useRouter();
   const { data: userInfo } = useQuery({
     queryFn: async () => {
@@ -36,7 +35,7 @@ const UserIdPage = observer(() => {
     )
   }
   return (
-    <main className="w-full h-full flex flex-col">
+    <main className="w-full h-full flex flex-col justify-center items-center">
       {userInfo.name}
       {userInfo.id === userState.info.id
         ? <PostField />

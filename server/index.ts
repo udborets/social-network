@@ -226,7 +226,11 @@ app.post(
 
 app.post("/posts", async (req, res) => {
   try {
-    const allPosts = await db.post.findMany({});
+    const allPosts = await db.post.findMany({
+      include: {
+        owner: true,
+      },
+    });
     res.send({
       OK: true,
       message: "",
@@ -260,6 +264,9 @@ app.post(
         data: {
           likedBy: req.body.likedBy,
         },
+        include: {
+          owner: true,
+        },
       });
       res.send({
         OK: true,
@@ -291,6 +298,9 @@ app.post(
           ownerId: req.body.ownerId,
           text: req.body.text ?? null,
           imageUrl: req.body.imageUrl ?? null,
+        },
+        include: {
+          owner: true,
         },
       });
       if (createdPost) {

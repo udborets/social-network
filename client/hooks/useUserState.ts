@@ -1,6 +1,7 @@
+import { useLocalStorage } from "usehooks-ts";
+
 import { DBUser } from "@/db/models";
 import { userState } from "@/store/User";
-import { useLocalStorage } from "usehooks-ts";
 
 export const useUserState = () => {
   const [localStorageUser, setLocalStorageUser] = useLocalStorage<DBUser>(

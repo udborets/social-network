@@ -1,9 +1,13 @@
+import { FC } from "react";
 
-const HomePage = () => {
+const HomePage: FC = () => {
   return (
     <main
-      className={`flex flex-col items-center justify-between p-24`}
+      className={`grid place-items-center w-full h-full`}
     >
+      <h1 className="text-[3rem] mb-[50px] text-blue font-bold">
+        Welcome to MyFriends
+      </h1>
     </main>
   )
 }

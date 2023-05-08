@@ -25,6 +25,7 @@ export type DBPost = {
   ownerId: string;
   id: string;
   createdAt?: string;
+  owner: DBUser;
 };
 
 export type DBFriends = {

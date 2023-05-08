@@ -1,9 +1,10 @@
-import Link from "next/link";
-import { FC } from "react";
-import { NavLinkProps } from "./models";
-import { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
+import Link from "next/link";
+import { useRouter } from "next/router";
+import { FC } from "react";
+
 import { userState } from "@/store/User";
+import { NavLinkProps } from "./models";
 
 const NavLink: FC<NavLinkProps> = observer(({ href, text }) => {
   const router = useRouter();

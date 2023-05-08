@@ -1,6 +1,7 @@
 import { makeAutoObservable } from "mobx";
-import { DBUser } from "@/db/models";
+
 import avatarImage from "@/assets/avatarImage.png";
+import { DBUser } from "@/db/models";
 
 export class User {
   info: DBUser = {

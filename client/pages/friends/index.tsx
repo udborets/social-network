@@ -1,4 +1,6 @@
-const FriendsPage = () => {
+import { FC } from "react";
+
+const FriendsPage: FC = () => {
   return (
     <main className="w-full h-full flex">
 

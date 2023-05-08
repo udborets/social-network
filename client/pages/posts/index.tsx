@@ -1,9 +1,11 @@
-import { DBPost } from "@/db/models";
-import Post from "@/features/Posts/Post/Post";
 import axios from "axios";
+import { FC } from "react";
 import { useQuery } from "react-query";
 
-const PostsPage = () => {
+import { DBPost } from "@/db/models";
+import Post from "@/features/Posts/Post/Post";
+
+const PostsPage: FC = () => {
   const { data: posts } = useQuery({
     queryFn: async () => {
       try {
@@ -17,7 +19,7 @@ const PostsPage = () => {
     }
   })
   return (
-    <main className="w-full h-full flex flex-col gap-4">
+    <main className="w-full h-full flex flex-col gap-4 justify-start items-center">
       {posts ? posts
         .sort((a, b) => (new Date(a.createdAt ?? Date.now())).getTime()
           - (new Date(b.createdAt ?? Date.now())).getTime())

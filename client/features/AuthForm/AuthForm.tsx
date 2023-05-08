@@ -1,5 +1,3 @@
-'use client'
-
 import axios, { AxiosError } from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { observer } from "mobx-react-lite";
@@ -11,12 +9,11 @@ import { v4 } from 'uuid';
 
 import avatarImage from '@/assets/avatarImage.png';
 import { DBUser } from "@/db/models";
+import BackToMyPageButton from "@/features/BackToMyPageButton/BackToMyPageButton";
 import { storage } from "@/firebase";
-import { userState } from "@/store/User";
+import { useUserState } from "@/hooks/useUserState";
 import { AuthTypes } from "./models";
 import styles from './styles.module.scss';
-import { useUserState } from "@/hooks/useUserState";
-import BackToMyPageButton from "../BackToMyPageButton/BackToMyPageButton";
 
 const AuthForm: FC = observer(() => {
   const router = useRouter();
@@ -25,7 +22,7 @@ const AuthForm: FC = observer(() => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [avatar, setAvatar] = useState<any>(null);
   const [isLogout, setIsLogout] = useState<boolean>(false);
-  const { localStorageUser, setUser } = useUserState()
+  const { localStorageUser, setUser } = useUserState();
   useEffect(() => {
     if (localStorageUser.id !== '') {
       setIsLogout(true);
@@ -41,7 +38,7 @@ const AuthForm: FC = observer(() => {
   } = useForm();
   const handleAvatarUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
-      setAvatar(e.target.files[0])
+      setAvatar(e.target.files[0]);
     }
   }
   if (isLogout) {
@@ -70,7 +67,7 @@ const AuthForm: FC = observer(() => {
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
     if (!backendUrl) {
       console.error("can't get backend url");
-      return
+      return;
     }
     try {
       const userId = v4();
@@ -101,9 +98,9 @@ const AuthForm: FC = observer(() => {
       setFetchError(response.data.message);
     }
     catch (e: unknown) {
-      console.log(e)
+      console.log(e);
       if (e instanceof AxiosError) {
-        setFetchError('Fetching error')
+        setFetchError('Fetching error');
       }
     }
   }
