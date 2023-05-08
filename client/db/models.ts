@@ -2,7 +2,17 @@ export type DBUser = {
   id: string;
   name: string;
   email: string;
-  posts: DBPost[] | null;
+  posts: DBPost[];
+  avatarUrl: string | null;
+  univ: string | null;
+  city: string | null;
+  age: number | null;
+};
+
+export type Friends = {
+  id: string;
+  userId: string;
+  friendId: string;
 };
 
 export type DBPost = {
@@ -12,7 +22,7 @@ export type DBPost = {
   ownerId: string;
   owner: DBUser;
   id: string;
-} | null;
+};
 
 export type DBFriends = {
   id: string;
