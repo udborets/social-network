@@ -7,12 +7,14 @@ export type DBUser = {
   univ: string | null;
   city: string | null;
   age: number | null;
+  createdAt?: string;
 };
 
 export type Friends = {
   id: string;
   userId: string;
   friendId: string;
+  createdAt?: string;
 };
 
 export type DBPost = {
@@ -22,10 +24,12 @@ export type DBPost = {
   imageUrl?: string;
   ownerId: string;
   id: string;
+  createdAt?: string;
 };
 
 export type DBFriends = {
   id: string;
   userId: string;
   friendId: string;
+  createdAt?: string;
 };
