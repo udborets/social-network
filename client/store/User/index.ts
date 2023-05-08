@@ -15,6 +15,10 @@ export class User {
     univ: null,
   };
 
+  setIsAuthed(isAuthed: boolean) {
+    this.isAuthed = isAuthed;
+  }
+
   setState(userInfo: DBUser) {
     this.info = userInfo;
   }
