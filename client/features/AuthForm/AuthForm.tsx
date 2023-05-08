@@ -1,9 +1,11 @@
+'use client'
+
 import axios, { AxiosError } from "axios";
 import { getDownloadURL, ref, uploadBytes } from "firebase/storage";
 import { observer } from "mobx-react-lite";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FC, useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { v4 } from 'uuid';
 
@@ -13,13 +15,23 @@ import { storage } from "@/firebase";
 import { userState } from "@/store/User";
 import { AuthTypes } from "./models";
 import styles from './styles.module.scss';
+import { useLocalStorage } from "@/hooks/useLocalStorage";
 
-const AuthForm = observer(() => {
+const AuthForm: FC = observer(() => {
   const router = useRouter();
   const [authType, setAuthType] = useState<AuthTypes>(AuthTypes.REGISTRATION);
   const [fetchError, setFetchError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [avatar, setAvatar] = useState<any>(null);
+  const [isLogout, setIsLogout] = useState<boolean>(false);
+  const [localStorageUser, setLocalStorageUser] = useLocalStorage<DBUser>('user', {
+    age: null, avatarUrl: null, city: null, email: '', id: '', name: '', posts: [], univ: null
+  })
+  useEffect(() => {
+    if (localStorageUser.id !== '') {
+      setIsLogout(true);
+    }
+  }, [])
   const {
     register,
     handleSubmit,
@@ -28,13 +40,28 @@ const AuthForm = observer(() => {
       errors,
     }
   } = useForm();
-
   const handleAvatarUpload = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       setAvatar(e.target.files[0])
     }
   }
 
+  if (isLogout) {
+    return (
+      <div className="flex flex-col justify-center items-center gap-4">
+        <span>Logged in as {localStorageUser.name}</span>
+        <button
+          onClick={() => {
+            setLocalStorageUser({
+              age: null, avatarUrl: null, city: null, email: '', id: '', name: '', posts: [], univ: null
+            });
+            userState.setIsAuthed(false);
+            setIsLogout(false)
+          }}
+          className="bg-red-600 text-white p-4 text-[1.2rem]">Logout</button>
+      </div>
+    )
+  }
   const submitForm = async (userData: object) => {
     const currentAuthType = authType;
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
@@ -55,12 +82,16 @@ const AuthForm = observer(() => {
           const avatarRef = ref(storage, `avatars/${userId}.${avatar?.name?.split('.').at(-1) ?? 'png'}`);
           const uploadResult = await uploadBytes(avatarRef, avatar ?? avatarImage);
           userState.setState({ ...response.data.user, avatarUrl: await getDownloadURL(uploadResult.ref) });
+          setLocalStorageUser({ ...response.data.user });
+          userState.setIsAuthed(true);
           router.push(`/user/${response.data.user.id}`);
           return;
         }
         if (!avatar?.name) {
           userState.setState({ ...response.data.user });
+          userState.setIsAuthed(true);
           router.push(`/user/${response.data.user.id}`);
+          setLocalStorageUser({ ...response.data.user });
           return;
         }
         reset();
