@@ -9,34 +9,39 @@ datasource db {
 }
 
 model User {
-  id        String  @id @unique @default(uuid())
-  name      String  @unique
-  email     String  @unique
+  id        String   @id @unique @default(uuid())
+  name      String   @unique
+  email     String   @unique
   posts     Post[]
   avatarUrl String?
   univ      String?
   city      String?
   age       Int?
+  createdAt DateTime @default(now())
 }
 
 model Post {
-  id       String   @id @default(uuid())
+  id       String  @id @default(uuid())
   ownerId  String
-  owner    User     @relation(fields: [ownerId], references: [id])
-  likes    Int      @default(0)
+  owner    User    @relation(fields: [ownerId], references: [id])
+  likes    Int     @default(0)
   text     String?
   imageUrl String?
-  likedBy  String[]
+
+  createdAt DateTime @default(now())
+  likedBy   String[]
 }
 
 model Friends {
-  id       String @id @default(uuid())
-  userId   String
-  friendId String
+  id        String   @id @default(uuid())
+  userId    String
+  friendId  String
+  createdAt DateTime @default(now())
 }
 
 model Passwords {
-  id       String @id @unique @default(uuid())
-  ownerId  String @unique
-  password String
+  id        String   @id @unique @default(uuid())
+  ownerId   String   @unique
+  password  String
+  createdAt DateTime @default(now())
 }
