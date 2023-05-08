@@ -18,9 +18,12 @@ const PostsPage = () => {
   })
   return (
     <main className="w-full h-full flex flex-col gap-4">
-      {posts ? posts.sort((a, b) => (new Date(a.createdAt ?? Date.now())).getTime() - (new Date(b.createdAt ?? Date.now())).getTime()).map((postProps) => (
-        <Post {...postProps} key={postProps.id} />
-      ))
+      {posts ? posts
+        .sort((a, b) => (new Date(a.createdAt ?? Date.now())).getTime()
+          - (new Date(b.createdAt ?? Date.now())).getTime())
+        .map((postProps) => (
+          <Post {...postProps} key={postProps.id} />
+        ))
         : ''}
     </main>
   )
