@@ -14,7 +14,8 @@
     "typescript": "^5.0.4"
   },
   "scripts": {
-    "dev": "nodemon index.ts"
+    "dev": "nodemon index.ts",
+    "start": "npx ts-node index.ts"
   },
   "devDependencies": {
     "@types/cors": "^2.8.13",
