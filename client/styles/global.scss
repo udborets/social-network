@@ -18,12 +18,17 @@
   .text-blue {
     @apply text-[var(--blue)];
   }
+
+  .bg-grey {
+    @apply bg-[var(--grey)];
+  }
 }
 
 :root {
   --blue: rgb(65, 179, 255);
   --blue-hover: rgb(33, 166, 255);
   --blue-active: rgb(0, 153, 255);
+  --grey: rgb(0, 0, 0);
 }
 
 html,
