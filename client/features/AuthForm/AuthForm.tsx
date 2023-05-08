@@ -1,16 +1,18 @@
+import axios, { AxiosError } from "axios";
+import { observer } from "mobx-react-lite";
+import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { StaticImageData } from "next/image";
-import Image from "next/image";
 
-import { AuthTypes } from "./models";
 import avatarImage from '@/assets/avatarImage.png';
+import { DBUser } from "@/db/models";
+import { userState } from "@/store/User";
+import { AuthTypes } from "./models";
 
-
-
-const AuthForm = () => {
+const AuthForm = observer(() => {
   const [authType, setAuthType] = useState<AuthTypes>(AuthTypes.REGISTRATION);
   const [avatar, setAvatar] = useState<StaticImageData | string>(avatarImage);
+  const [fetchError, setFetchError] = useState<string>('');
   const {
     register,
     handleSubmit,
@@ -18,11 +20,29 @@ const AuthForm = () => {
     formState: {
       errors,
     }
-  } = useForm({
-  });
-  const submitForm = (data: any) => {
-    console.log({ ...data, type: authType });
-    reset()
+  } = useForm();
+  const submitForm = async (userData: object) => {
+    try {
+      const currentAuthType = authType;
+      const response = await axios.post<{
+        OK: boolean;
+        message: string;
+        user: DBUser;
+      }>(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? ''}/auth/${currentAuthType.toLowerCase()}`, { ...userData })
+      if (response.data.OK) {
+        console.log(response)
+        reset()
+        setAvatar(avatarImage);
+        userState.setState(response.data.user)
+      }
+      setFetchError(response.data.message)
+    }
+    catch (e: unknown) {
+      if (e instanceof AxiosError) {
+        console.error(e);
+        setFetchError('Fetching error')
+      }
+    }
   }
   return (
     <form
@@ -73,12 +93,12 @@ const AuthForm = () => {
               <input
                 className="rounded-[8px] outline outline-1 outline-[var(--blue)] px-2 py-1 text-[1rem] font-normal"
                 type="text"
-                {...register('username', {
+                {...register('name', {
                   required: 'Pass valid username'
                 })}
               />
               <span className="min-h-[30px] text-red-600 text-[1rem]">
-                {errors?.username?.message?.toString()}
+                {errors?.name?.message?.toString()}
               </span>
             </label>
           </>
@@ -110,13 +130,16 @@ const AuthForm = () => {
           </span>
         </label>
       </div>
-      <input
-        className="text-white bg-blue text-bold text-[1.2rem] w-fit px-3 py-2 rounded-[10px] hover:bg-blue-hover active:bg-blue-active transition-all duration-300"
-        value={`${authType === AuthTypes.REGISTRATION
-          ? 'Register'
-          : 'Login'}`}
-        type="submit"
-      />
+      <div className="flex w-full h-fit gap-8 items-center">
+        <input
+          className="text-white bg-blue text-bold text-[1.2rem] w-fit px-3 py-2 rounded-[10px] hover:bg-blue-hover active:bg-blue-active transition-all duration-300"
+          value={`${authType === AuthTypes.REGISTRATION
+            ? 'Register'
+            : 'Login'}`}
+          type="submit"
+        />
+        <span className="text-red-600 text-bold">{fetchError ?? ''}</span>
+      </div>
       <div className="flex gap-2 text-[1.1rem]">
         <span>
           {authType === AuthTypes.AUTHORIZATION ?
@@ -137,6 +160,6 @@ const AuthForm = () => {
       </div>
     </form>
   )
-}
+})
 
 export default AuthForm
