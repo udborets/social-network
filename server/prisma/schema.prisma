@@ -20,12 +20,13 @@ model User {
 }
 
 model Post {
-  id       String  @id @default(uuid())
-  owner    User    @relation(fields: [ownerId], references: [id])
+  id       String   @id @default(uuid())
   ownerId  String
-  likes    Int     @default(0)
+  owner    User     @relation(fields: [ownerId], references: [id])
+  likes    Int      @default(0)
   text     String?
   imageUrl String?
+  likedBy  String[]
 }
 
 model Friends {
