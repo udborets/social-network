@@ -54,7 +54,7 @@ app.post(
           },
         });
         return res.send({
-          ...createdUser,
+          user: createdUser,
           OK: true,
           message: "",
         });
@@ -107,7 +107,7 @@ app.post(
         });
         if (userByEmailPassword?.password === req.body.password) {
           return res.send({
-            ...userByEmail,
+            user: userByEmail,
             OK: true,
             message: "",
           });

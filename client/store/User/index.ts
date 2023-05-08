@@ -1,26 +1,12 @@
 import { makeAutoObservable } from "mobx";
+import { DBUser } from "@/db/models";
 
 export class User {
-  id: string = "";
-  username: string = "";
-  email: string = "";
   isAuthed: boolean = false;
+  info: DBUser = { email: "", id: "", name: "", posts: null };
 
-  setState({
-    id,
-    username,
-    email,
-    isAuthed,
-  }: {
-    id: string;
-    username: string;
-    email: string;
-    isAuthed: boolean;
-  }) {
-    this.email = email;
-    this.id = id;
-    this.username = username;
-    this.isAuthed = isAuthed;
+  setState(userInfo: DBUser) {
+    this.info = userInfo;
   }
 
   getSelf() {
