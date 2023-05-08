@@ -14,6 +14,9 @@ model User {
   email     String  @unique
   posts     Post[]
   avatarUrl String?
+  univ      String?
+  city      String?
+  age       Int?
 }
 
 model Post {
