@@ -9,22 +9,6 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/users", async (req, res) => {
-  try {
-    const allUsers = await db.user.findMany();
-    res.send({
-      users: allUsers,
-      OK: true,
-      message: "",
-    });
-  } catch (e) {
-    res.send({
-      OK: false,
-      message: JSON.stringify(e),
-    });
-  }
-});
-
 app.post(
   "/auth/registration",
   async (
@@ -43,10 +27,16 @@ app.post(
         where: {
           email: req.body.email,
         },
+        include: {
+          posts: true,
+        },
       });
       const foundName = await db.user.findUnique({
         where: {
           name: req.body.name,
+        },
+        include: {
+          posts: true,
         },
       });
       if (!foundEmail && !foundName) {
@@ -97,11 +87,11 @@ app.post(
 
 app.post("/users/id", async (req: TypedRequestBody<{ id: string }>, res) => {
   try {
-    const foundUser =await db.user.findUnique({
+    const foundUser = await db.user.findUnique({
       where: { id: req.body.id },
       include: { posts: true },
     });
-    console.log(foundUser)
+    console.log(foundUser);
     if (!foundUser) {
       return res.send({
         user: null,
@@ -178,7 +168,11 @@ app.post(
 );
 
 app.post("/users", async (req, res) => {
-  const allUsers = await db.user.findMany();
+  const allUsers = await db.user.findMany({
+    include: {
+      posts: true,
+    },
+  });
   res.send({
     users: allUsers,
     OK: true,
@@ -187,7 +181,7 @@ app.post("/users", async (req, res) => {
 });
 
 app.post(
-  "user/update",
+  "/users/update",
   async (
     req: TypedRequestBody<{
       id: string;
@@ -201,6 +195,9 @@ app.post(
     const oldUserInfo = await db.user.findUnique({
       where: {
         id: req.body.id,
+      },
+      include: {
+        posts: true,
       },
     });
     if (!oldUserInfo) {
@@ -227,9 +224,9 @@ app.post(
   }
 );
 
-app.get("posts", async (req, res) => {
+app.post("/posts", async (req, res) => {
   try {
-    const allPosts = await db.post.findMany();
+    const allPosts = await db.post.findMany({});
     res.send({
       OK: true,
       message: "",
@@ -242,6 +239,82 @@ app.get("posts", async (req, res) => {
     });
   }
 });
+
+app.post(
+  "/posts/update",
+  async (
+    req: TypedRequestBody<{
+      id: string;
+      currentLikes: number;
+      likedBy: string[];
+      isLiked: boolean;
+      userId: string;
+    }>,
+    res
+  ) => {
+    try {
+      const updatedPost = await db.post.update({
+        where: {
+          id: req.body.id,
+        },
+        data: {
+          likedBy: req.body.likedBy,
+        },
+      });
+      res.send({
+        OK: true,
+        message: "",
+        post: updatedPost,
+      });
+    } catch (e) {
+      res.send({
+        OK: false,
+        message: JSON.stringify(e),
+      });
+    }
+  }
+);
+
+app.post(
+  "/posts/create",
+  async (
+    req: TypedRequestBody<{
+      ownerId: string;
+      text: string;
+      imageUrl: string;
+    }>,
+    res
+  ) => {
+    try {
+      const createdPost = await db.post.create({
+        data: {
+          ownerId: req.body.ownerId,
+          text: req.body.text ?? null,
+          imageUrl: req.body.imageUrl ?? null,
+        },
+      });
+      if (createdPost) {
+        return res.send({
+          OK: true,
+          post: createdPost,
+          message: "",
+        });
+      }
+      if (!createdPost) {
+        return res.send({
+          OK: false,
+          post: null,
+          message: "error while creating post",
+        });
+      }
+    } catch (e) {
+      return res.send({
+        OK: false,
+        message: JSON.stringify(e),
+      });
+    }
+  }
+);
 
 app.listen(5000, () => {
   console.log("listening http://localhost:5000");
