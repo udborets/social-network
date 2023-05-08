@@ -144,6 +144,46 @@ app.post("/users", async (req, res) => {
   });
 });
 
+app.post(
+  "user/update",
+  async (
+    req: TypedRequestBody<{
+      id: string;
+      age?: number;
+      city?: string;
+      univ?: string;
+    }>,
+    res
+  ) => {
+    const oldUserInfo = await db.user.findUnique({
+      where: {
+        id: req.body.id,
+      },
+    });
+    if (!oldUserInfo) {
+      res.send({
+        OK: false,
+        message: "No user with this id",
+      });
+    }
+    const updatedUser = await db.user.update({
+      where: {
+        id: req.body.id,
+      },
+      data: {
+        age: req.body.age ?? oldUserInfo?.age ?? null,
+        city: req.body.city ?? oldUserInfo?.city ?? null,
+        univ: req.body.univ ?? oldUserInfo?.univ ?? null,
+      },
+    });
+    return res.send({
+      OK: true,
+      message: "",
+      user: updatedUser,
+    });
+  }
+);
+
 app.listen(5000, () => {
   console.log("listening http://localhost:5000");
 });
