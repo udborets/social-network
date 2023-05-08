@@ -15,7 +15,8 @@ import { storage } from "@/firebase";
 import { userState } from "@/store/User";
 import { AuthTypes } from "./models";
 import styles from './styles.module.scss';
-import { useLocalStorage } from "@/hooks/useLocalStorage";
+import { useUserState } from "@/hooks/useUserState";
+import BackToMyPageButton from "../BackToMyPageButton/BackToMyPageButton";
 
 const AuthForm: FC = observer(() => {
   const router = useRouter();
@@ -24,9 +25,7 @@ const AuthForm: FC = observer(() => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [avatar, setAvatar] = useState<any>(null);
   const [isLogout, setIsLogout] = useState<boolean>(false);
-  const [localStorageUser, setLocalStorageUser] = useLocalStorage<DBUser>('user', {
-    age: null, avatarUrl: null, city: null, email: '', id: '', name: '', posts: [], univ: null
-  })
+  const { localStorageUser, setUser } = useUserState()
   useEffect(() => {
     if (localStorageUser.id !== '') {
       setIsLogout(true);
@@ -45,20 +44,24 @@ const AuthForm: FC = observer(() => {
       setAvatar(e.target.files[0])
     }
   }
-
   if (isLogout) {
     return (
       <div className="flex flex-col justify-center items-center gap-4">
-        <span>Logged in as {localStorageUser.name}</span>
+        <span>
+          Logged in as {localStorageUser.name}
+        </span>
         <button
           onClick={() => {
-            setLocalStorageUser({
+            setUser({
               age: null, avatarUrl: null, city: null, email: '', id: '', name: '', posts: [], univ: null
             });
-            userState.setIsAuthed(false);
-            setIsLogout(false)
+            setIsLogout(false);
           }}
-          className="bg-red-600 text-white p-4 text-[1.2rem]">Logout</button>
+          className="bg-red-600 text-white p-4 text-[1.2rem]"
+        >
+          Logout
+        </button>
+        <BackToMyPageButton />
       </div>
     )
   }
@@ -72,29 +75,27 @@ const AuthForm: FC = observer(() => {
     try {
       const userId = v4();
       setIsLoading(true);
+      let downloadUrl = null;
+      if (avatar?.name) {
+        const avatarRef = ref(storage, `avatars/${userId}.${avatar?.name?.split('.').at(-1) ?? 'png'}`);
+        const uploadResult = await uploadBytes(avatarRef, avatar);
+        downloadUrl = await getDownloadURL(uploadResult.ref);
+      }
       const response = await axios.post<{
         OK: boolean;
         message: string;
         user: DBUser;
-      }>(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? ''}/auth/${currentAuthType.toLowerCase()}`, { ...userData, id: userId });
+      }>(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? ''}/auth/${currentAuthType.toLowerCase()}`,
+        { ...userData, id: userId, avatarUrl: downloadUrl });
       if (response.data.OK) {
-        if (avatar?.name) {
-          const avatarRef = ref(storage, `avatars/${userId}.${avatar?.name?.split('.').at(-1) ?? 'png'}`);
-          const uploadResult = await uploadBytes(avatarRef, avatar ?? avatarImage);
-          userState.setState({ ...response.data.user, avatarUrl: await getDownloadURL(uploadResult.ref) });
-          setLocalStorageUser({ ...response.data.user });
-          userState.setIsAuthed(true);
+        setUser({ ...response.data.user });
+        if (currentAuthType === AuthTypes.AUTHORIZATION) {
           router.push(`/user/${response.data.user.id}`);
           return;
         }
-        if (!avatar?.name) {
-          userState.setState({ ...response.data.user });
-          userState.setIsAuthed(true);
-          router.push(`/user/${response.data.user.id}`);
-          setLocalStorageUser({ ...response.data.user });
-          return;
-        }
+        router.push(`/user/${response.data.user.id}`);
         reset();
+        return;
       }
       setIsLoading(false);
       setFetchError(response.data.message);
@@ -102,7 +103,6 @@ const AuthForm: FC = observer(() => {
     catch (e: unknown) {
       console.log(e)
       if (e instanceof AxiosError) {
-        console.error(e);
         setFetchError('Fetching error')
       }
     }
