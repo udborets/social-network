@@ -3,7 +3,6 @@ import { DBUser } from "@/db/models";
 import avatarImage from "@/assets/avatarImage.png";
 
 export class User {
-  isAuthed: boolean = false;
   info: DBUser = {
     email: "",
     id: "",
@@ -14,10 +13,6 @@ export class User {
     city: null,
     univ: null,
   };
-
-  setIsAuthed(isAuthed: boolean) {
-    this.isAuthed = isAuthed;
-  }
 
   setState(userInfo: DBUser) {
     this.info = userInfo;
