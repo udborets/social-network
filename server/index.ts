@@ -9,15 +9,27 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-app.get("/get", async (req, res) => {
-  const allUsers = await db.user.findMany();
-  res.send(JSON.stringify(allUsers));
+app.get("/users", async (req, res) => {
+  try {
+    const allUsers = await db.user.findMany();
+    res.send({
+      users: allUsers,
+      OK: true,
+      message: "",
+    });
+  } catch (e) {
+    res.send({
+      OK: false,
+      message: JSON.stringify(e),
+    });
+  }
 });
 
 app.post(
   "/auth/registration",
   async (
     req: TypedRequestBody<{
+      id: string;
       name: string;
       email: string;
       avatarUrl: string;
@@ -26,6 +38,7 @@ app.post(
     res
   ) => {
     try {
+      console.log(req.body.id);
       const foundEmail = await db.user.findUnique({
         where: {
           email: req.body.email,
@@ -39,6 +52,7 @@ app.post(
       if (!foundEmail && !foundName) {
         const createdUser = await db.user.create({
           data: {
+            id: req.body.id ?? null,
             email: req.body.email,
             name: req.body.name,
             avatarUrl: req.body.avatarUrl ?? null,
@@ -68,7 +82,7 @@ app.post(
       if (foundName) {
         return res.send({
           OK: false,
-          message: "This name is already taken",
+          message: "This username is already taken",
         });
       }
     } catch (e) {
@@ -149,6 +163,7 @@ app.post(
   async (
     req: TypedRequestBody<{
       id: string;
+      avatarUrl: string;
       age?: number;
       city?: string;
       univ?: string;
@@ -183,6 +198,22 @@ app.post(
     });
   }
 );
+
+app.get("posts", async (req, res) => {
+  try {
+    const allPosts = await db.post.findMany();
+    res.send({
+      OK: true,
+      message: "",
+      posts: allPosts,
+    });
+  } catch (e) {
+    res.send({
+      OK: false,
+      message: JSON.stringify(e),
+    });
+  }
+});
 
 app.listen(5000, () => {
   console.log("listening http://localhost:5000");
