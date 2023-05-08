@@ -19,15 +19,23 @@
     @apply text-[var(--blue)];
   }
 
+  .text-blue-hover {
+    @apply text-[var(--blue-hover)];
+  }
+
+  .text-blue-active {
+    @apply text-[var(--blue-active)];
+  }
+
   .bg-grey {
     @apply bg-[var(--grey)];
   }
 }
 
 :root {
-  --blue: rgb(65, 179, 255);
-  --blue-hover: rgb(33, 166, 255);
-  --blue-active: rgb(0, 153, 255);
+  --blue: rgb(53, 174, 255);
+  --blue-hover: rgb(0, 153, 255);
+  --blue-active: rgb(0, 123, 180);
   --grey: rgb(0, 0, 0);
 }
 
@@ -40,4 +48,5 @@ body,
 
 #__next {
   display: flex;
+  flex-direction: column;
 }
