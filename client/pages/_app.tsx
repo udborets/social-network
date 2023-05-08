@@ -7,16 +7,16 @@ import { useLocalStorage } from 'usehooks-ts';
 import { DBUser } from '@/db/models';
 import { userState } from '@/store/User';
 import '@/styles/global.scss';
+import { useUserState } from '@/hooks/useUserState';
 
 const client = new QueryClient();
 
 const App = observer(({ Component, pageProps }: AppProps) => {
-  const [localStorageUser, setLocalStorageUser] = useLocalStorage<DBUser>('user', {
-    age: null, avatarUrl: null, city: null, email: '', id: '', name: '', posts: [], univ: null
-  })
+  const { localStorageUser, setUser } = useUserState()
   useEffect(() => {
+    console.log(localStorageUser)
     if (localStorageUser.id !== '') {
-      userState.setState(localStorageUser);
+      setUser(localStorageUser);
     }
   }, [])
   return (
