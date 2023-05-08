@@ -16,11 +16,11 @@ export type Friends = {
 };
 
 export type DBPost = {
+  likedBy: string[];
   likes: number;
   text?: string;
   imageUrl?: string;
   ownerId: string;
-  owner: DBUser;
   id: string;
 };
 
