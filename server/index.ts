@@ -52,7 +52,7 @@ app.post(
       if (!foundEmail && !foundName) {
         const createdUser = await db.user.create({
           data: {
-            id: req.body.id ?? null,
+            id: req.body.id,
             email: req.body.email,
             name: req.body.name,
             avatarUrl: req.body.avatarUrl ?? null,
@@ -94,6 +94,34 @@ app.post(
     }
   }
 );
+
+app.post("/users/id", async (req: TypedRequestBody<{ id: string }>, res) => {
+  try {
+    const foundUser =await db.user.findUnique({
+      where: { id: req.body.id },
+      include: { posts: true },
+    });
+    console.log(foundUser)
+    if (!foundUser) {
+      return res.send({
+        user: null,
+        OK: false,
+        message: "no user with such id",
+      });
+    }
+    return res.send({
+      user: foundUser,
+      OK: true,
+      message: "",
+    });
+  } catch (e) {
+    console.error(e);
+    res.send({
+      OK: false,
+      message: "user not found",
+    });
+  }
+});
 
 app.post(
   "/auth/authorization",
