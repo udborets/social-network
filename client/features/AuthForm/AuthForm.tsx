@@ -24,6 +24,11 @@ const AuthForm = observer(() => {
   const submitForm = async (userData: object) => {
     try {
       const currentAuthType = authType;
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
+      if (!backendUrl) {
+        console.error("can't get backend url");
+        return
+      }
       const response = await axios.post<{
         OK: boolean;
         message: string;
