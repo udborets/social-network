@@ -1,10 +1,15 @@
+import { userState } from "@/store/User";
+import { observer } from "mobx-react-lite";
 import { useRouter } from "next/router"
 
-const UserIdPage = () => {
-  const a = useRouter();
+const UserIdPage = observer(() => {
+  const { query } = useRouter();
+  const isOwn = userState.info.id === query.id
   return (
-    <div>{a.query.id}</div>
+    <main>
+
+    </main>
   )
-}
+})
 
 export default UserIdPage;
