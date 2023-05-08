@@ -1,17 +1,24 @@
 import { makeAutoObservable } from "mobx";
 import { DBUser } from "@/db/models";
+import avatarImage from "@/assets/avatarImage.png";
 
 export class User {
   isAuthed: boolean = false;
-  info: DBUser = { email: "", id: "", name: "", posts: null };
+  info: DBUser = {
+    email: "",
+    id: "",
+    name: "",
+    posts: [],
+    age: null,
+    avatarUrl: avatarImage.src,
+    city: null,
+    univ: null,
+  };
 
   setState(userInfo: DBUser) {
     this.info = userInfo;
   }
 
-  getSelf() {
-    return this;
-  }
   constructor() {
     makeAutoObservable(this);
   }
