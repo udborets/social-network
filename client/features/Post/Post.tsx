@@ -12,8 +12,8 @@ import styles from './styles.module.scss';
 const Post: FC<DBPost> = observer((
   { id, imageUrl, likedBy, text, owner }
 ) => {
-  const [isLiked, setIsLiked] = useState<boolean>(likedBy.includes(userState.info.id));
-  const [currentLikedBy, setCurrentLikedBy] = useState<string[]>(likedBy);
+  const [isLiked, setIsLiked] = useState<boolean>(likedBy?.includes(userState.info.id) ?? []);
+  const [currentLikedBy, setCurrentLikedBy] = useState<string[]>(likedBy ?? []);
   const debouncedIsLiked = useDebounce(isLiked, 500);
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const updatePost = async () => {
@@ -42,9 +42,9 @@ const Post: FC<DBPost> = observer((
   return (
     <div className="rounded-[20px] p-4 w-full max-w-[300px] outline text-black outline-[var(--blue)] flex flex-col gap-4 items-center">
       <h4 className="font-bold text-center w-full text-[1.2rem] flex justify-end items-start gap-6">
-        {owner.name}
+        {owner?.name?? 'User'}
         <Image
-          src={owner.avatarUrl ?? avatarImage}
+          src={owner?.avatarUrl ?? avatarImage} priority
           alt="avatar image"
           className="w-[50px] h-[50px] rounded-[50%] self-center"
           width={50}
@@ -55,7 +55,7 @@ const Post: FC<DBPost> = observer((
         {text}
       </p>
       {imageUrl
-        ? <Image src={imageUrl} alt='post image' width={300} height={70} />
+        ? <Image src={imageUrl} alt='post image' width={300} height={70} priority />
         : ''}
       <label htmlFor="like" className="place-self-end text-center flex justify-center gap-2 font-bold text-[1.2rem]">
         {currentLikedBy?.length ?? 0}
