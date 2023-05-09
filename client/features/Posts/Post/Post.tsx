@@ -1,39 +1,45 @@
 import axios from "axios";
 import Image from "next/image";
 import { ChangeEvent, FC, useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { useDebounce } from "usehooks-ts";
 
 import avatarImage from '@/assets/avatarImage.png';
 import { DBPost } from "@/db/models";
 import { userState } from "@/store/User";
+import { observer } from "mobx-react-lite";
 
-const Post: FC<DBPost> = (
+const Post: FC<DBPost> = observer((
   { id, imageUrl, likedBy, text, owner }
 ) => {
-  const [value, setValue] = useState<boolean>(likedBy.includes(userState.info.id));
-  const debouncedValue = useDebounce<boolean>(value, 500)
+  const [isLiked, setIsLiked] = useState<boolean>(likedBy.includes(userState.info.id));
   const [currentLikedBy, setCurrentLikedBy] = useState<string[]>(likedBy);
-  const [init, setInit] = useState<boolean>(true);
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.checked)
+  const debouncedIsLiked = useDebounce(isLiked, 500);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const updatePost = async () => {
+    try {
+      setIsLoading(true);
+      const updatedList = currentLikedBy
+        .filter((userId) => userId !== userState.info.id);
+      if (debouncedIsLiked) updatedList.push(userState.info.id);
+      const updatedPost = await axios.post<{ post: DBPost }>((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + "/posts/update",
+        { id: id, likedBy: updatedList });
+      setIsLoading(false);
+      if (updatedPost.data && updatedPost.data.post) {
+        setCurrentLikedBy(updatedPost.data.post.likedBy);
+        return updatedPost.data.post.likedBy;
+      }
+    }
+    catch (e) {
+      console.error(e);
+      return [];
+    }
   }
 
   useEffect(() => {
-    if (!init) {
-      const newLikedByList: string[] = likedBy
-        .filter((userId) => userId !== userState.info.id);
-      if (debouncedValue) {
-        newLikedByList.push(userState.info.id);
-      }
-      setCurrentLikedBy(newLikedByList);
-      axios
-        .post<{ post: DBPost }>((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + '/posts/update', { likedBy: newLikedByList, id: id })
-        .then(({ data }) => setCurrentLikedBy(data.post.likedBy));
-    }
-    if (init) {
-      setInit(false);
-    }
-  }, [debouncedValue])
+    if (!isLoading)
+      updatePost();
+  }, [debouncedIsLiked])
   return (
     <div className="rounded-[20px] p-4 w-full max-w-[300px] outline text-black outline-[var(--blue)] flex flex-col gap-4 items-center">
       <h4 className="font-bold text-center w-full text-[1.2rem]">{owner.name}</h4>
@@ -54,14 +60,15 @@ const Post: FC<DBPost> = (
             type='checkbox'
             name="like"
             className="checked:bg-blue"
-            checked={value}
-            onChange={() => setValue(prev => !prev)}
+            checked={debouncedIsLiked}
+            disabled={isLoading}
+            onChange={() => setIsLiked(prev => !prev)}
           />
         </label>
         {currentLikedBy?.length ?? 0}
       </div>
     </div>
   )
-}
+})
 
 export default Post
