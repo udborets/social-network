@@ -326,46 +326,44 @@ app.post(
   }
 );
 
-app.post(
-  "/friends/id",
-  async (req: TypedRequestBody<{ userId: string }>, res) => {
-    try {
-      const friends = await db.friends.findMany({
-        where: {
-          userId: req.body.userId,
-        },
-      });
-      if (friends) {
-        return res.send({
-          OK: true,
-          friends: friends,
-        });
-      }
+app.post("/friends", async (req: TypedRequestBody<{}>, res) => {
+  try {
+    const friends = await db.friends.findMany();
+    if (friends) {
       return res.send({
-        OK: false,
-        message: "friends not found",
-      });
-    } catch (e) {
-      return res.send({
-        OK: false,
-        message: JSON.stringify(e),
+        OK: true,
+        friends: friends,
       });
     }
+    return res.send({
+      OK: false,
+      message: "friends not found",
+    });
+  } catch (e) {
+    return res.send({
+      OK: false,
+      message: JSON.stringify(e),
+    });
   }
-);
+});
 
 app.post(
   "/friends/add",
   async (req: TypedRequestBody<{ userId: string; friendId: string }>, res) => {
     try {
-      const createdFriend = await db.friends.create({
+      const createdFriend1 = await db.friends.create({
         data: {
           friendId: req.body.friendId,
           userId: req.body.userId,
         },
       });
+      const createdFriend2 = await db.friends.create({
+        data: {
+          friendId: req.body.userId,
+          userId: req.body.friendId,
+        },
+      });
       return res.send({
-        friend: createdFriend,
         OK: true,
         message: "",
       });
@@ -380,16 +378,39 @@ app.post(
 
 app.post(
   "/friends/remove",
-  async (req: TypedRequestBody<{ id: string }>, res) => {
+  async (req: TypedRequestBody<{ userId: string; friendId: string }>, res) => {
     try {
-      await db.friends.delete({
+      const foundFriend1 = await db.friends.findFirst({
         where: {
-          id: req.body.id,
+          friendId: req.body.friendId,
+          userId: req.body.userId,
         },
       });
+      const foundFriend2 = await db.friends.findFirst({
+        where: {
+          friendId: req.body.userId,
+          userId: req.body.friendId,
+        },
+      });
+      if (foundFriend1 && foundFriend2) {
+        await db.friends.delete({
+          where: {
+            id: foundFriend1.id,
+          },
+        });
+        await db.friends.delete({
+          where: {
+            id: foundFriend2.id,
+          },
+        });
+        return res.send({
+          OK: true,
+          message: "",
+        });
+      }
       return res.send({
-        OK: true,
-        message: "",
+        OK: false,
+        message: "friendship not found",
       });
     } catch (e) {
       return res.send({
