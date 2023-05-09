@@ -1,5 +1,6 @@
-import { FC } from "react"
-import { AuthInputProps } from "./models"
+import { FC } from "react";
+
+import { AuthInputProps } from "./models";
 
 const AuthInput: FC<AuthInputProps> = ({ errors, required, register, registerName, text, isPassword }) => {
   return (

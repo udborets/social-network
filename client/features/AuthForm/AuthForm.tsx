@@ -12,10 +12,10 @@ import { DBUser } from "@/db/models";
 import BackToMyPageButton from "@/features/BackToMyPageButton/BackToMyPageButton";
 import { storage } from "@/firebase";
 import { useUserState } from "@/hooks/useUserState";
+import LogoutButton from "../LogoutButton/LogoutButton";
+import AuthInput from "./AuthInput/AuthInput";
 import { AuthTypes } from "./models";
 import styles from './styles.module.scss';
-import AuthInput from "./AuthInput/AuthInput";
-import LogoutButton from "../LogoutButton/LogoutButton";
 
 const AuthForm: FC = observer(() => {
   const router = useRouter();

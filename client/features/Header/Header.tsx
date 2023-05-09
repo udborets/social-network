@@ -1,6 +1,6 @@
-import { FC } from "react";
 import { observer } from "mobx-react-lite";
 import Link from "next/link";
+import { FC } from "react";
 
 import { HeaderProps } from "./models";
 import Navbar from "./Navbar/Navbar";

@@ -1,13 +1,12 @@
-import { DBUser } from "@/db/models";
-import { DBFriends } from "@/db/models";
-import CheckOutOtherUsersButton from "@/features/CheckOutOtherUsersButton/CheckOutOtherUsersButton";
-import UserItem from "@/features/UserItem/UserItem";
-import Post from "@/features/UserPosts/Post/Post";
-import { userState } from "@/store/User";
 import axios from "axios";
 import { observer } from "mobx-react-lite";
 import { FC } from "react";
 import { useQuery } from "react-query";
+
+import { DBFriends, DBUser } from "@/db/models";
+import CheckOutOtherUsersButton from "@/features/CheckOutOtherUsersButton/CheckOutOtherUsersButton";
+import UserItem from "@/features/UserItem/UserItem";
+import { userState } from "@/store/User";
 
 const FriendsPage: FC = observer(() => {
   const { data: friends } = useQuery({
@@ -16,7 +15,7 @@ const FriendsPage: FC = observer(() => {
         const fetchedFriends = await axios.post<{ friends: DBFriends[] }>((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + "/friends");
         if (fetchedFriends.data) {
           const friendsIds = fetchedFriends.data.friends
-            .filter(({ friendId, userId }) => userId === userState.info.id)
+            .filter(({ userId }) => userId === userState.info.id)
             .map(({ friendId }) => friendId)
           const allUsers = await axios.post<{ users: DBUser[] }>((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + "/users")
           if (allUsers.data) {

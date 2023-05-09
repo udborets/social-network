@@ -1,11 +1,11 @@
 import axios from "axios";
+import { observer } from "mobx-react-lite";
 import { FC } from "react";
 import { useQuery } from "react-query";
 
 import { DBFriends, DBPost } from "@/db/models";
 import Post from "@/features/UserPosts/Post/Post";
 import { userState } from "@/store/User";
-import { observer } from "mobx-react-lite";
 
 const PostsPage: FC = observer(() => {
   const { data: friendsIds } = useQuery({

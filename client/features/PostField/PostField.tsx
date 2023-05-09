@@ -15,7 +15,6 @@ const PostField: FC = observer(() => {
     handleSubmit,
     reset,
     formState: {
-      errors,
     }
   } = useForm();
   const submit = async ({ text }: any) => {
