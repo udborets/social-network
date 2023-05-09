@@ -13,7 +13,7 @@ import BackToMyPageButton from "@/features/BackToMyPageButton/BackToMyPageButton
 import { storage } from "@/firebase";
 import { useUserState } from "@/hooks/useUserState";
 import LogoutButton from "../LogoutButton/LogoutButton";
-import AuthInput from "./AuthInput/AuthInput";
+import FormInput from "../FormInput/FormInput";
 import { AuthTypes } from "./models";
 import styles from './styles.module.scss';
 
@@ -79,10 +79,10 @@ const AuthForm: FC = observer(() => {
       if (response.data.OK) {
         setUser({ ...response.data.user });
         if (currentAuthType === AuthTypes.AUTHORIZATION) {
-          router.push(`/user/${response.data.user.id}`);
+          router.push(`/users/${response.data.user.id}`);
           return;
         }
-        router.push(`/user/${response.data.user.id}`);
+        router.push(`/users/${response.data.user.id}`);
         reset();
         return;
       }
@@ -136,21 +136,21 @@ const AuthForm: FC = observer(() => {
                   />
                 }
               </label>
-              <AuthInput
+              <FormInput
                 errors={errors}
                 register={register}
                 registerName="name"
                 text="Username"
                 required="Pass valid username"
               />
-              <AuthInput
+              <FormInput
                 errors={errors}
                 register={register}
                 registerName="email"
                 text="Email"
                 required="Pass valid email"
               />
-              <AuthInput
+              <FormInput
                 errors={errors}
                 register={register}
                 registerName="password"
@@ -160,14 +160,14 @@ const AuthForm: FC = observer(() => {
               />
             </>
             : <>
-              <AuthInput
+              <FormInput
                 errors={errors}
                 register={register}
                 registerName="email"
                 text="Email"
                 required="Pass valid email"
               />
-              <AuthInput
+              <FormInput
                 errors={errors}
                 register={register}
                 registerName="password"

@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { AuthInputProps } from "./models";
 
-const AuthInput: FC<AuthInputProps> = ({ errors, required, register, registerName, text, isPassword }) => {
+const FormInput: FC<AuthInputProps> = ({ errors, required, register, registerName, text, isPassword }) => {
   return (
     <label className="flex flex-col text-[1.2rem] font-bold">
       <span>
@@ -27,4 +27,4 @@ const AuthInput: FC<AuthInputProps> = ({ errors, required, register, registerNam
   )
 }
 
-export default AuthInput
+export default FormInput;
