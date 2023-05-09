@@ -42,7 +42,7 @@ const Post: FC<DBPost> = observer((
   return (
     <div className="rounded-[20px] p-4 w-full max-w-[300px] outline text-black outline-[var(--blue)] flex flex-col gap-4 items-center">
       <h4 className="font-bold text-center w-full text-[1.2rem] flex justify-end items-start gap-6">
-        {owner?.name?? 'User'}
+        {owner?.name ?? 'User'}
         <Image
           src={owner?.avatarUrl ?? avatarImage} priority
           alt="avatar image"
@@ -55,16 +55,26 @@ const Post: FC<DBPost> = observer((
         {text}
       </p>
       {imageUrl
-        ? <Image src={imageUrl} alt='post image' width={300} height={70} priority />
+        ? <Image
+          src={imageUrl}
+          alt='post image'
+          width={300}
+          height={70}
+          priority
+        />
         : ''}
-      <label htmlFor="like" className="place-self-end text-center flex justify-center gap-2 font-bold text-[1.2rem]">
+      <label
+        htmlFor="like"
+        className="place-self-end text-center flex justify-center gap-2 font-bold text-[1.2rem]"
+      >
         {currentLikedBy?.length ?? 0}
         <input
           type='checkbox'
           name="like"
           id="like"
-          className={`appearance-none w-[30px] h-[30px] duration-300 transition-all 
-            ${isLiked ? ` ${styles.likeBlue}` : `bg-none ${styles.likeBlack}`}`}
+          className={`appearance-none w-[30px] h-[30px] duration-300 transition-all ${isLiked
+            ? `${styles.likeBlue}`
+            : `bg-none ${styles.likeBlack}`}`}
           checked={debouncedIsLiked}
           disabled={isLoading}
           onChange={() => setIsLiked(prev => !prev)}
