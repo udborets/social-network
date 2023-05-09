@@ -326,6 +326,80 @@ app.post(
   }
 );
 
+app.post(
+  "/friends/id",
+  async (req: TypedRequestBody<{ userId: string }>, res) => {
+    try {
+      const friends = await db.friends.findMany({
+        where: {
+          userId: req.body.userId,
+        },
+      });
+      if (friends) {
+        return res.send({
+          OK: true,
+          friends: friends,
+        });
+      }
+      return res.send({
+        OK: false,
+        message: "friends not found",
+      });
+    } catch (e) {
+      return res.send({
+        OK: false,
+        message: JSON.stringify(e),
+      });
+    }
+  }
+);
+
+app.post(
+  "/friends/add",
+  async (req: TypedRequestBody<{ userId: string; friendId: string }>, res) => {
+    try {
+      const createdFriend = await db.friends.create({
+        data: {
+          friendId: req.body.friendId,
+          userId: req.body.userId,
+        },
+      });
+      return res.send({
+        friend: createdFriend,
+        OK: true,
+        message: "",
+      });
+    } catch (e) {
+      return res.send({
+        OK: false,
+        message: JSON.stringify(e),
+      });
+    }
+  }
+);
+
+app.post(
+  "/friends/remove",
+  async (req: TypedRequestBody<{ id: string }>, res) => {
+    try {
+      await db.friends.delete({
+        where: {
+          id: req.body.id,
+        },
+      });
+      return res.send({
+        OK: true,
+        message: "",
+      });
+    } catch (e) {
+      return res.send({
+        OK: false,
+        message: JSON.stringify(e),
+      });
+    }
+  }
+);
+
 app.listen(5000, () => {
   console.log("listening http://localhost:5000");
 });
