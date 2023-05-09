@@ -7,6 +7,7 @@ import { QueryClient, QueryClientProvider } from 'react-query';
 import Header from '@/features/Header/Header';
 import { HeaderProps } from '@/features/Header/models';
 import { useUserState } from '@/hooks/useUserState';
+import { routeState } from '@/store/Route';
 import { userState } from '@/store/User';
 import '@/styles/global.scss';
 
@@ -26,12 +27,21 @@ const headerProps: HeaderProps = {
       href: "/friends",
       text: "Friends",
     },
+    {
+      href: "/user",
+      text: "Users",
+    },
   ]
 }
 
 const App: FC<AppProps> = observer(({ Component, pageProps }) => {
   const { localStorageUser, setUser } = useUserState()
   const router = useRouter();
+
+  useEffect(() => {
+    routeState.setCurrent(router.asPath);
+  }, [router.asPath])
+
   useEffect(() => {
     console.log(localStorageUser)
     if (localStorageUser.id !== '') {
