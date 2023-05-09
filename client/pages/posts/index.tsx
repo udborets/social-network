@@ -3,7 +3,7 @@ import { FC } from "react";
 import { useQuery } from "react-query";
 
 import { DBPost } from "@/db/models";
-import Post from "@/features/Posts/Post/Post";
+import Post from "@/features/Post/Post";
 
 const PostsPage: FC = () => {
   const { data: posts } = useQuery({
@@ -21,7 +21,7 @@ const PostsPage: FC = () => {
   })
   return (
     <main className="w-full h-full flex flex-col gap-4 justify-start items-center">
-      {posts ? posts
+      {(posts && posts.length !== 0) ? posts
         .sort((b, a) => (new Date(a.createdAt ?? Date.now())).getTime()
           - (new Date(b.createdAt ?? Date.now())).getTime())
         .map((postProps) => (
