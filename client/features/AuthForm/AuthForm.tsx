@@ -14,6 +14,8 @@ import { storage } from "@/firebase";
 import { useUserState } from "@/hooks/useUserState";
 import { AuthTypes } from "./models";
 import styles from './styles.module.scss';
+import AuthInput from "./AuthInput/AuthInput";
+import LogoutButton from "../LogoutButton/LogoutButton";
 
 const AuthForm: FC = observer(() => {
   const router = useRouter();
@@ -44,21 +46,11 @@ const AuthForm: FC = observer(() => {
   if (isLogout) {
     return (
       <div className="flex flex-col justify-center items-center gap-4">
-        <span>
+        <span className="text-[2rem]">
           Logged in as {localStorageUser.name}
         </span>
-        <button
-          onClick={() => {
-            setUser({
-              age: null, avatarUrl: null, city: null, email: '', id: '', name: '', posts: [], univ: null
-            });
-            setIsLogout(false);
-          }}
-          className="bg-red-600 text-white p-4 text-[1.2rem]"
-        >
-          Logout
-        </button>
-        <BackToMyPageButton />
+        <BackToMyPageButton className="text-[1.5rem]" />
+        <LogoutButton fn={() => setIsLogout(false)} className="text-[1.5rem]" />
       </div>
     )
   }
@@ -144,47 +136,44 @@ const AuthForm: FC = observer(() => {
                   />
                 }
               </label>
-              <label className="flex flex-col text-[1.2rem] font-bold">
-                <span><span className="text-red-700">*</span>Username</span>
-                <input
-                  className="rounded-[8px] outline outline-1 outline-[var(--blue)] px-2 py-1 text-[1rem] font-normal"
-                  type="text"
-                  {...register('name', {
-                    required: 'Pass valid username'
-                  })}
-                />
-                <span className="min-h-[30px] text-red-600 text-[1rem]">
-                  {errors?.name?.message?.toString()}
-                </span>
-              </label>
+              <AuthInput
+                errors={errors}
+                register={register}
+                registerName="name"
+                text="Username"
+                required="Pass valid username"
+              />
+              <AuthInput
+                errors={errors}
+                register={register}
+                registerName="email"
+                text="Email"
+                required="Pass valid email"
+              />
+              <AuthInput
+                errors={errors}
+                register={register}
+                registerName="password"
+                text="Password"
+                required="Pass valid password"
+              />
             </>
-            : ''}
-          <label className="flex flex-col text-[1.2rem] font-bold">
-            <span><span className="text-red-700">*</span>Email</span>
-            <input
-              className="rounded-[8px] outline outline-1 outline-[var(--blue)] px-2 py-1 text-[1rem] font-normal"
-              type="text"
-              {...register('email', {
-                required: 'Pass valid email'
-              })}
-            />
-            <span className="min-h-[30px] text-red-600 text-[1rem]">
-              {errors?.email?.message?.toString()}
-            </span>
-          </label>
-          <label className="flex flex-col text-[1.2rem] font-bold">
-            <span><span className="text-red-700">*</span>Password</span>
-            <input
-              className="rounded-[8px] outline outline-1 outline-[var(--blue)] px-2 py-1 text-[1rem] font-normal"
-              type="text"
-              {...register('password', {
-                required: 'Pass valid password'
-              })}
-            />
-            <span className="min-h-[30px] text-red-600 text-[1rem]">
-              {errors?.password?.message?.toString()}
-            </span>
-          </label>
+            : <>
+              <AuthInput
+                errors={errors}
+                register={register}
+                registerName="email"
+                text="Email"
+                required="Pass valid email"
+              />
+              <AuthInput
+                errors={errors}
+                register={register}
+                registerName="password"
+                text="Password"
+                required="Pass valid password"
+              />
+            </>}
         </div>
         <div className="flex w-full h-fit gap-8 items-center">
           <input
