@@ -72,9 +72,9 @@ const Post: FC<DBPost> = observer((
           type='checkbox'
           name="like"
           id="like"
-          className={`appearance-none w-[30px] h-[30px] duration-300 transition-all ${isLiked
+          className={`appearance-none w-[30px] bg-none h-[30px] duration-300 transition-all ${isLiked
             ? `${styles.likeBlue}`
-            : `bg-none ${styles.likeBlack}`}`}
+            : `${styles.likeBlack}`}`}
           checked={debouncedIsLiked}
           disabled={isLoading}
           onChange={() => setIsLiked(prev => !prev)}
