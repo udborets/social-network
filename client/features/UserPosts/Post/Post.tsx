@@ -40,11 +40,12 @@ const Post: FC<DBPost> = observer((
       updatePost();
   }, [debouncedIsLiked])
   return (
-    <div className="rounded-[20px] p-4 w-full max-w-[300px] outline text-black outline-[var(--blue)] flex flex-col gap-4 items-center">
+    <div className="bg-white rounded-[20px] p-4 max-w-[600px] min-w-[300px] w-full outline text-black outline-[var(--blue)] flex flex-col gap-4 items-center">
       <h4 className="font-bold text-center w-full text-[1.2rem] flex justify-end items-start gap-6">
         {owner?.name ?? 'User'}
         <Image
-          src={owner?.avatarUrl ?? avatarImage} priority
+          src={owner?.avatarUrl ?? avatarImage}
+          priority
           alt="avatar image"
           className="w-[50px] h-[50px] rounded-[50%] self-center"
           width={50}
@@ -58,7 +59,7 @@ const Post: FC<DBPost> = observer((
         ? <Image
           src={imageUrl}
           alt='post image'
-          width={300}
+          width={200}
           height={70}
           priority
         />
