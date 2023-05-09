@@ -7,6 +7,8 @@ import { useQuery } from "react-query";
 import { DBUser } from "@/db/models";
 import BackToMyPageButton from "@/features/BackToMyPageButton/BackToMyPageButton";
 import PostField from "@/features/PostField/PostField";
+import UserInfo from "@/features/UserInfo/UserInfo";
+import UserPosts from "@/features/UserPosts/UserPosts";
 import { userState } from "@/store/User";
 
 const UserIdPage: FC = observer(() => {
@@ -25,25 +27,34 @@ const UserIdPage: FC = observer(() => {
         console.error(e);
       }
     },
+    refetchInterval: 3000,
     queryKey: [`${router.query.id}`]
   })
   if (!userInfo?.id) {
     return (
       <main className="w-full h-full grid place-items-center font-bold text-[1.5rem]">
         <div className="flex flex-col justify-center items-center gap-4">
-        <h2>
-          User not found
-        </h2>
-        <BackToMyPageButton />
+          <h2>
+            User not found
+          </h2>
+          <BackToMyPageButton />
         </div>
       </main>
     )
   }
   return (
-    <main className="w-full h-full flex flex-col justify-center items-center">
+    <main className="w-full h-full flex flex-col justify-start items-center">
       {userInfo.name}
+      {userInfo
+        ? <UserInfo userId={userInfo.id} />
+        : ''}
       {userInfo.id === userState.info.id
         ? <PostField />
+        : ''}
+      {userInfo.posts
+        ? <UserPosts
+          posts={userInfo.posts}
+        />
         : ''}
     </main>
   )
