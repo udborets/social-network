@@ -5,6 +5,7 @@ import { useQuery } from "react-query";
 
 import { DBFriends, DBPost } from "@/db/models";
 import Post from "@/features/UserPosts/Post/Post";
+import UserPosts from "@/features/UserPosts/UserPosts";
 import { userState } from "@/store/User";
 
 const PostsPage: FC = observer(() => {
@@ -57,7 +58,8 @@ const PostsPage: FC = observer(() => {
         .map((postProps) => (
           <Post {...postProps} key={postProps.id} />
         )).length !== 0)
-        ? posts.filter((post) => {
+        ?
+        <UserPosts posts={posts.filter((post) => {
           if (friendsIds) {
             if (friendsIds.includes(post.ownerId)) {
               return true;
@@ -65,12 +67,7 @@ const PostsPage: FC = observer(() => {
             return false;
           }
           return true;
-        })
-          .sort((b, a) => (new Date(a.createdAt ?? Date.now())).getTime()
-            - (new Date(b.createdAt ?? Date.now())).getTime())
-          .map((postProps) => (
-            <Post {...postProps} key={postProps.id} />
-          ))
+        })} />
         : `Your friends did not post anything yet`}
     </main>
   )
