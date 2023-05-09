@@ -156,6 +156,7 @@ const AuthForm: FC = observer(() => {
                 registerName="password"
                 text="Password"
                 required="Pass valid password"
+                isPassword
               />
             </>
             : <>
@@ -172,6 +173,7 @@ const AuthForm: FC = observer(() => {
                 registerName="password"
                 text="Password"
                 required="Pass valid password"
+                isPassword
               />
             </>}
         </div>
