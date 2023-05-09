@@ -30,7 +30,12 @@ const UserIdPage: FC = observer(() => {
   if (!userInfo?.id) {
     return (
       <main className="w-full h-full grid place-items-center font-bold text-[1.5rem]">
+        <div className="flex flex-col justify-center items-center gap-4">
+        <h2>
+          User not found
+        </h2>
         <BackToMyPageButton />
+        </div>
       </main>
     )
   }
