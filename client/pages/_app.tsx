@@ -28,7 +28,7 @@ const headerProps: HeaderProps = {
       text: "Friends",
     },
     {
-      href: "/user",
+      href: "/users",
       text: "Users",
     },
   ]

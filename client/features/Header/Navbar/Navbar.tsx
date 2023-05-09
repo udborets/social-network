@@ -10,7 +10,7 @@ const Navbar: FC<NavbarProps> = observer(({ navLinks }) => {
     <nav className="w-fit">
       <ul className="flex justify-evenly w-fit gap-8">
         {userState.info.id !== ''
-          ? [...navLinks, { href: `/user/${userState.info.id}`, text: "Me" }].map((navLinkProps) => (
+          ? [...navLinks, { href: `/users/${userState.info.id}`, text: "Me" }].map((navLinkProps) => (
             <NavLink
               {...navLinkProps}
               key={navLinkProps.text}

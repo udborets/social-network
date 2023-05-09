@@ -1,5 +1,6 @@
 import { DBUser } from "@/db/models";
 import { DBFriends } from "@/db/models";
+import CheckOutOtherUsersButton from "@/features/CheckOutOtherUsersButton/CheckOutOtherUsersButton";
 import UserItem from "@/features/UserItem/UserItem";
 import Post from "@/features/UserPosts/Post/Post";
 import { userState } from "@/store/User";
@@ -38,6 +39,7 @@ const FriendsPage: FC = observer(() => {
           <UserItem {...userProps} key={userProps.id} />
         ))
         : ''}
+      <CheckOutOtherUsersButton />
     </main>
   )
 })
