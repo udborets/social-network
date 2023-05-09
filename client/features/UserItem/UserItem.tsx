@@ -29,7 +29,7 @@ const UserItem: FC<UserItemProps> = observer(({ id }) => {
     refetch();
   }, [])
   return (
-    <div className="w-full max-w-[500px] bg-slate-300 rounded-[20px] p-5 flex gap-4">
+    <div className="w-full max-w-[500px] max-h-[100px] h-full bg-slate-300 rounded-[20px] p-5 flex gap-4">
       <span>{id}</span>
       <button
         disabled={isFetching || isRefetching}
