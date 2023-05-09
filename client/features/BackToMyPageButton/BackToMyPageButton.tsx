@@ -3,17 +3,16 @@ import Link from "next/link";
 import { FC } from "react";
 
 import { userState } from "@/store/User";
+import { BackToMyPageButtonProps } from "./models";
 
-const BackToMyPageButton: FC = observer(() => {
+const BackToMyPageButton: FC<BackToMyPageButtonProps> = observer(({ className }) => {
   return (
-    <div className="flex flex-col gap-5 justify-center items-center rounded-[20px]">
-      <Link
-        className="text-blue"
-        href={`/user/${userState.info.id}`}
-      >
-        Back to my page!
-      </Link>
-    </div>
+    <Link
+      className={`text-white bg-blue hover:bg-blue-hover active:bg-blue-active transition-all duration-300 p-3 rounded-[15px] ${className}`}
+      href={`/user/${userState.info.id}`}
+    >
+      Back to my page!
+    </Link>
   )
 })
 
