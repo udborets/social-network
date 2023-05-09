@@ -20,7 +20,8 @@ const UserPage: FC = observer(() => {
         console.error(e);
         return [] as DBUser[];
       }
-    }
+    },
+    queryKey: ['usersPage']
   })
   return (
     <main className="w-full h-full">
