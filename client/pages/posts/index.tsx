@@ -15,13 +15,15 @@ const PostsPage: FC = () => {
       }
       catch (e) {
         console.error(e);
+        return [];
       }
-    }
+    },
+    refetchInterval: 6000,
   })
   return (
     <main className="w-full h-full flex flex-col gap-4 justify-start items-center">
       {posts ? posts
-        .sort((a, b) => (new Date(a.createdAt ?? Date.now())).getTime()
+        .sort((b, a) => (new Date(a.createdAt ?? Date.now())).getTime()
           - (new Date(b.createdAt ?? Date.now())).getTime())
         .map((postProps) => (
           <Post {...postProps} key={postProps.id} />
