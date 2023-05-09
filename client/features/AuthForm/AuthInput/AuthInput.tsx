@@ -1,7 +1,7 @@
 import { FC } from "react"
 import { AuthInputProps } from "./models"
 
-const AuthInput: FC<AuthInputProps> = ({ errors, required, register, registerName, text }) => {
+const AuthInput: FC<AuthInputProps> = ({ errors, required, register, registerName, text, isPassword }) => {
   return (
     <label className="flex flex-col text-[1.2rem] font-bold">
       <span>
@@ -14,7 +14,7 @@ const AuthInput: FC<AuthInputProps> = ({ errors, required, register, registerNam
       </span>
       <input
         className="rounded-[8px] outline outline-1 outline-[var(--blue)] px-2 py-1 text-[1rem] font-normal"
-        type="text"
+        type={isPassword ? "password" : "text"}
         {...register(registerName, {
           required: required ?? false,
         })}

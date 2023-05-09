@@ -1,4 +1,8 @@
-import { ErrorOption, FieldErrors, FieldValues, UseFormRegister } from "react-hook-form";
+import {
+  FieldErrors,
+  FieldValues,
+  UseFormRegister,
+} from "react-hook-form";
 
 export type AuthInputProps = {
   required?: string;
@@ -6,4 +10,5 @@ export type AuthInputProps = {
   register: UseFormRegister<FieldValues>;
   registerName: string;
   text: string;
+  isPassword?: boolean;
 };
