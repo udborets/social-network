@@ -1,13 +1,13 @@
 import axios from "axios";
+import { observer } from "mobx-react-lite";
 import Image from "next/image";
-import { ChangeEvent, FC, useEffect, useState } from "react";
-import { useQuery } from "react-query";
+import { FC, useEffect, useState } from "react";
 import { useDebounce } from "usehooks-ts";
 
 import avatarImage from '@/assets/avatarImage.png';
 import { DBPost } from "@/db/models";
 import { userState } from "@/store/User";
-import { observer } from "mobx-react-lite";
+import styles from './styles.module.scss';
 
 const Post: FC<DBPost> = observer((
   { id, imageUrl, likedBy, text, owner }
@@ -35,38 +35,41 @@ const Post: FC<DBPost> = observer((
       return [];
     }
   }
-
   useEffect(() => {
     if (!isLoading)
       updatePost();
   }, [debouncedIsLiked])
   return (
     <div className="rounded-[20px] p-4 w-full max-w-[300px] outline text-black outline-[var(--blue)] flex flex-col gap-4 items-center">
-      <h4 className="font-bold text-center w-full text-[1.2rem]">{owner.name}</h4>
-      <Image
-        src={owner.avatarUrl ?? avatarImage}
-        alt="avatar image"
-        className="w-[70px] h-[70px] rounded-[50%] self-center"
-        width={70}
-        height={70}
-      />
-      <p className="mt-[20px] max-w-[90%] text-center">{text}</p>
+      <h4 className="font-bold text-center w-full text-[1.2rem] flex justify-end items-start gap-6">
+        {owner.name}
+        <Image
+          src={owner.avatarUrl ?? avatarImage}
+          alt="avatar image"
+          className="w-[50px] h-[50px] rounded-[50%] self-center"
+          width={50}
+          height={50}
+        />
+      </h4>
+      <p className="mt-[20px] max-w-[90%] w-full text-left">
+        {text}
+      </p>
       {imageUrl
-        ? <Image src={imageUrl} alt='post image' width={70} height={70} />
+        ? <Image src={imageUrl} alt='post image' width={300} height={70} />
         : ''}
-      <div className="flex gap-4">
-        <label htmlFor="like" className="checked:bg-blue">
-          <input
-            type='checkbox'
-            name="like"
-            className="checked:bg-blue"
-            checked={debouncedIsLiked}
-            disabled={isLoading}
-            onChange={() => setIsLiked(prev => !prev)}
-          />
-        </label>
+      <label htmlFor="like" className="place-self-end text-center flex justify-center gap-2 font-bold text-[1.2rem]">
         {currentLikedBy?.length ?? 0}
-      </div>
+        <input
+          type='checkbox'
+          name="like"
+          id="like"
+          className={`appearance-none w-[30px] h-[30px] duration-300 transition-all 
+            ${isLiked ? ` ${styles.likeBlue}` : `bg-none ${styles.likeBlack}`}`}
+          checked={debouncedIsLiked}
+          disabled={isLoading}
+          onChange={() => setIsLiked(prev => !prev)}
+        />
+      </label>
     </div>
   )
 })
