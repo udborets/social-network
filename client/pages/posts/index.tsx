@@ -18,6 +18,7 @@ const PostsPage: FC = () => {
         return [];
       }
     },
+    queryKey: ['allPosts']
   })
   return (
     <main className="w-full h-full flex flex-col gap-4 justify-start items-center">
