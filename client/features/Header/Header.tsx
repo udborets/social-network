@@ -7,13 +7,13 @@ import Navbar from "./Navbar/Navbar";
 
 const Header: FC<HeaderProps> = observer(({ navLinks }) => {
   return (
-    <header className="w-full h-full px-[150px] max-h-[100px] min-h-[100px] flex justify-center items-center">
+    <header className="w-full h-full md:px-[100px] flex-wrap md:flex-nowrap max-h-[100px] min-h-[100px] flex justify-center items-center">
       <h2 className="w-fit h-fit text-[2rem] text-blue font-bold">
         <Link href='/'>
           MyFriends
         </Link>
       </h2>
-      <span className="mx-10 w-[2px] h-[30%] bg-blue" />
+      <span className="mx-2 sm:mx-10 w-[2px] h-[30%] bg-blue" />
       <Navbar
         navLinks={navLinks}
       />
@@ -21,4 +21,4 @@ const Header: FC<HeaderProps> = observer(({ navLinks }) => {
   )
 })
 
-export default Header
+export default Header;
