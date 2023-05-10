@@ -17,8 +17,7 @@ const FormInput: FC<AuthInputProps> = ({ errors, required, register, registerNam
         className="rounded-[8px] outline outline-1 outline-[var(--blue)] px-2 py-1 text-[1rem] font-normal"
         type={isPassword ? "password" : "text"}
         {...register(registerName, {
-          minLength: 5,
-          maxLength: 20,
+          validate: (value: string) => (value.trim().length <= 20 && value.trim().length >= 5),
           required: required ?? false,
           pattern: registerName === 'email' ? /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g : /[^\>]*/,
         })}
