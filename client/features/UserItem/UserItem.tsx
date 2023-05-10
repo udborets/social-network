@@ -2,14 +2,18 @@ import axios from "axios";
 import { observer } from "mobx-react-lite";
 import { FC, useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import Image from "next/image";
 
 import { DBFriends } from "@/db/models";
 import { userState } from "@/store/User";
 import { UserItemProps } from "./models";
+import avatarImage from '@/assets/avatarImage.png';
+import { useRouter } from "next/router";
 
-const UserItem: FC<UserItemProps> = observer(({ id, name }) => {
+const UserItem: FC<UserItemProps> = observer(({ id, name, avatarUrl }) => {
   const [isFriend, setIsFriend] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
   const { refetch } = useQuery({
     queryFn: async () => {
       try {
@@ -30,7 +34,17 @@ const UserItem: FC<UserItemProps> = observer(({ id, name }) => {
     refetch();
   }, [])
   return (
-    <div className="w-full max-w-[80%] max-h-[100px] h-full bg-slate-300 rounded-[20px] p-5 flex gap-4 justify-between items-center">
+    <div
+      className="w-full max-w-[80%] max-h-[100px] h-full bg-slate-300 rounded-[20px] p-5 flex gap-4 justify-between items-center"
+      onClick={() => router.push(`/users/${id}`)}
+    >
+      <Image
+        src={avatarUrl ?? avatarImage}
+        alt="avatar image"
+        width={70}
+        height={70}
+        className="w-[70px] h-[70px] rounded-[50%]"
+      />
       <span className="font-bold text-[1.4rem] w-full text-center">
         {name}
       </span>
@@ -40,7 +54,8 @@ const UserItem: FC<UserItemProps> = observer(({ id, name }) => {
           ? 'hover:bg-red-600 active:bg-red-900 outline-red-400'
           : 'hover:bg-blue-hover active:bg-blue-active outline-[var(--blue)]'} disabled:bg-[#00000096] outline rounded-[10px] p-2 bg-white 
           duration-300 transition-all hover:text-white active:text-white min-h-[50px] w-full max-w-[150px]`}
-        onClick={async () => {
+        onClick={async (e) => {
+          e.stopPropagation();
           if (!isFriend) {
             setIsLoading(true);
             await axios.post((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + '/friends/add', { userId: userState.info.id, friendId: id });
