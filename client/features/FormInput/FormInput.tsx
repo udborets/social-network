@@ -17,11 +17,16 @@ const FormInput: FC<AuthInputProps> = ({ errors, required, register, registerNam
         className="rounded-[8px] outline outline-1 outline-[var(--blue)] px-2 py-1 text-[1rem] font-normal"
         type={isPassword ? "password" : "text"}
         {...register(registerName, {
+          minLength: 5,
+          maxLength: 20,
           required: required ?? false,
+          pattern: registerName === 'email' ? /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g : /[^\>]*/,
         })}
       />
       <span className="min-h-[30px] text-red-600 text-[1rem]">
-        {errors[registerName]?.message?.toString()}
+        {errors[registerName]?.message !== ''
+          ? errors[registerName]?.message?.toString()
+          : registerName === 'email' ? 'Pass valid email' : "Pass value from 5 to 20 symbols"}
       </span>
     </label>
   )
