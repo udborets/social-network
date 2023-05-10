@@ -54,7 +54,7 @@ const AuthForm: FC = observer(() => {
       </div>
     )
   }
-  const submitForm = async (userData: object) => {
+  const submitForm = async (userData: Record<string, string>) => {
     const currentAuthType = authType;
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL;
     if (!backendUrl) {
@@ -70,12 +70,15 @@ const AuthForm: FC = observer(() => {
         const uploadResult = await uploadBytes(avatarRef, avatar);
         downloadUrl = await getDownloadURL(uploadResult.ref);
       }
+      const trimmedData = Object
+        .keys(userData)
+        .reduce((trimmedValuesObject, key) => ({ ...trimmedValuesObject, [key]: trimmedValuesObject[key].trim() }), userData);
       const response = await axios.post<{
         OK: boolean;
         message: string;
         user: DBUser;
       }>(`${process.env.NEXT_PUBLIC_BACKEND_URL ?? ''}/auth/${currentAuthType.toLowerCase()}`,
-        { ...userData, id: userId, avatarUrl: downloadUrl });
+        { ...trimmedData, id: userId, avatarUrl: downloadUrl });
       if (response.data.OK) {
         setUser({ ...response.data.user });
         if (currentAuthType === AuthTypes.AUTHORIZATION) {
