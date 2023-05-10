@@ -190,32 +190,39 @@ app.post(
     }>,
     res
   ) => {
-    const oldUserInfo = await db.user.findUnique({
-      where: {
-        id: req.body.id,
-      },
-    });
-    if (!oldUserInfo) {
-      res.send({
+    try {
+      const oldUserInfo = await db.user.findUnique({
+        where: {
+          id: req.body.id,
+        },
+      });
+      if (!oldUserInfo) {
+        res.send({
+          OK: false,
+          message: "No user with this id",
+        });
+      }
+      const updatedUser = await db.user.update({
+        where: {
+          id: req.body.id,
+        },
+        data: {
+          age: req.body.age ?? oldUserInfo?.age,
+          city: req.body.city ?? oldUserInfo?.city,
+          univ: req.body.univ ?? oldUserInfo?.univ,
+        },
+      });
+      return res.send({
+        OK: true,
+        message: "",
+        user: updatedUser,
+      });
+    } catch (e) {
+      return res.send({
         OK: false,
-        message: "No user with this id",
+        message: JSON.stringify(e),
       });
     }
-    const updatedUser = await db.user.update({
-      where: {
-        id: req.body.id,
-      },
-      data: {
-        age: req.body.age ?? oldUserInfo?.age ?? null,
-        city: req.body.city ?? oldUserInfo?.city ?? null,
-        univ: req.body.univ ?? oldUserInfo?.univ ?? null,
-      },
-    });
-    return res.send({
-      OK: true,
-      message: "",
-      user: updatedUser,
-    });
   }
 );
 
@@ -257,7 +264,7 @@ app.post(
           id: req.body.id,
         },
         data: {
-          likedBy: req.body.likedBy,
+          likedBy: req.body.likedBy ?? [],
         },
         include: {
           owner: true,
