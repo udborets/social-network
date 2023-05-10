@@ -16,10 +16,8 @@ const PostsPage: FC = observer(() => {
         if (fetchedFriends.data) {
           const allFriends = fetchedFriends.data.friends
             .filter(({ friendId, userId }) => [friendId, userId].includes(userState.info.id))
-            .map(({ friendId, userId }) => [friendId, userId]);
-          const allIds: string[] = [];
-          allFriends.forEach((idsArr) => allIds.push(...idsArr));
-          return allIds;
+            .map(({ friendId, userId }) => friendId === userState.info.id ? userId : friendId);
+          return allFriends;
         }
       }
       catch (e) {
@@ -47,23 +45,16 @@ const PostsPage: FC = observer(() => {
       {(posts && posts.length !== 0 &&
         posts.filter((post) => {
           if (friendsIds) {
-            if (friendsIds.includes(post.ownerId) || friendsIds.includes(userState.info.id))
-              return true;
-            return false;
+            return friendsIds.includes(post.ownerId)
           }
-          return true;
         })
           .sort((b, a) => (new Date(a.createdAt ?? Date.now())).getTime()
             - (new Date(b.createdAt ?? Date.now())).getTime())
           .length !== 0)
         ? <UserPosts posts={posts.filter((post) => {
           if (friendsIds) {
-            if (friendsIds.includes(post.ownerId) || friendsIds.includes(userState.info.id)) {
-              return true;
-            }
-            return false;
+            return friendsIds.includes(post.ownerId)
           }
-          return true;
         })} />
         : (
           <div className="flex flex-grow justify-center items-center">
