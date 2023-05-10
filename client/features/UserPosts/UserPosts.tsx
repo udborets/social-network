@@ -4,7 +4,7 @@ import Post from "./Post/Post"
 
 const UserPosts: FC<UserPostsProps> = ({ posts }) => {
   return (
-    <ul className="flex flex-col gap-8 px-[300px] py-[50px] rounded-[10px] bg-slate-50">
+    <ul className="flex flex-col gap-8 sm:px-[100px] sm:py-[50px] rounded-[10px] bg-slate-50">
       {posts
         .sort((b, a) => (new Date(a.createdAt ?? Date.now())).getTime()
           - (new Date(b.createdAt ?? Date.now())).getTime())
