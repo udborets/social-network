@@ -1,6 +1,7 @@
 import axios from "axios";
 import { observer } from "mobx-react-lite";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import { FC, useEffect, useState } from "react";
 import { useDebounce } from "usehooks-ts";
 
@@ -16,6 +17,7 @@ const Post: FC<DBPost> = observer((
   const [currentLikedBy, setCurrentLikedBy] = useState<string[]>(likedBy ?? []);
   const debouncedIsLiked = useDebounce(isLiked, 500);
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const router = useRouter();
   const updatePost = async () => {
     try {
       setIsLoading(true);
@@ -41,7 +43,10 @@ const Post: FC<DBPost> = observer((
   }, [debouncedIsLiked])
   return (
     <div className="bg-white rounded-[20px] p-4 max-w-full w-full outline text-black outline-[var(--blue)] flex flex-col gap-4 items-center">
-      <h4 className="font-bold text-center w-full text-[1.2rem] flex justify-end items-start gap-6">
+      <h4
+        className="font-bold text-center w-full text-[1.2rem] flex justify-end items-start gap-6"
+        onClick={() => router.push(`/users/${owner.id ?? ""}`)}
+      >
         {owner?.name ?? 'User'}
         <Image
           src={owner?.avatarUrl ?? avatarImage}
