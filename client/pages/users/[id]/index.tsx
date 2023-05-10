@@ -7,6 +7,7 @@ import { useQuery } from "react-query";
 
 import { DBUser } from "@/db/models";
 import BackToMyPageButton from "@/features/BackToMyPageButton/BackToMyPageButton";
+import FriendButton from "@/features/FriendButton/FriendButton";
 import PostField from "@/features/PostField/PostField";
 import UserInfo from "@/features/UserInfo/UserInfo";
 import UserPosts from "@/features/UserPosts/UserPosts";
@@ -54,12 +55,22 @@ const UserIdPage: FC = observer(() => {
           : ''}
         {userInfo.id === userState.info.id
           ? <PostField />
-          : ''}
+          : <FriendButton friendId={userInfo.id} />}
         {userInfo.posts.length !== 0
-          ? <UserPosts
-            posts={userInfo.posts}
-          />
-          : ''}
+          ? <>
+            <p className="font-bold text-[1.1rem] text-center max-w-[300px]">
+              {userInfo.id === userState.info.id
+                ? 'Your posts'
+                : `${userInfo.name}'s posts`}
+            </p>
+            <UserPosts
+              posts={userInfo.posts}
+            />
+          </>
+          : (
+            <p className="font-bold text-[1.1rem] text-center max-w-[300px]">
+              {`${userInfo.id === userState.info.id ? 'You' : userInfo.name} did't post anything yet`}
+            </p>)}
       </main>
     </>
   )
