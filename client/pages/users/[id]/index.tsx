@@ -32,19 +32,20 @@ const UserIdPage: FC = observer(() => {
     queryKey: [`${router.query.id}`]
   })
   if (!userInfo?.id) {
-    return (<>
-      <Head>
-        <title>MyFriends | Not found</title>
-      </Head>
-      <main className="w-full h-full grid place-items-center font-bold text-[1.5rem]">
-        <div className="flex flex-col justify-center items-center gap-4">
-          <h2>
-            User not found
-          </h2>
-          <BackToMyPageButton />
-        </div>
-      </main>
-    </>
+    return (
+      <>
+        <Head>
+          <title>MyFriends | Not found</title>
+        </Head>
+        <main className="w-full min-h-[calc(100vh-100px)] grid place-items-center font-bold text-[1.5rem]">
+          <div className="flex flex-col justify-center items-center gap-4">
+            <h2>
+              User not found
+            </h2>
+            <BackToMyPageButton />
+          </div>
+        </main>
+      </>
     )
   }
   return (
