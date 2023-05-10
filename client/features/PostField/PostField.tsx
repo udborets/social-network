@@ -44,20 +44,21 @@ const PostField: FC = observer(() => {
       onSubmit={handleSubmit(submit)}
       className="flex flex-col gap-2"
     >
+      <span className="font-bold text-[1.2rem]">
+        Create post
+      </span>
       <textarea
         placeholder="Enter post text..."
-        className="outline max-w-[400px] outline-[var(--blue)] p-2 rounded-[10px]"
+        className="outline max-w-[600px] outline-[var(--blue)] p-2 rounded-[10px]"
         {...register('text')}
       />
-      <label htmlFor="">
-        <input
-          onChange={(e: any) => setChosenFile(e.target.files[0])}
-          type="file"
-          accept="image/png, image/jpeg"
-        />
-      </label>
       <input
-        className="p-2 rounded-[10px] outline-[var(--blue)] outline hover:bg-blue-hover active:bg-blue-active disabled:bg-slate-600"
+        onChange={(e: any) => setChosenFile(e.target.files[0])}
+        type="file"
+        accept="image/png, image/jpeg"
+      />
+      <input
+        className="p-2 rounded-[10px] outline-[var(--blue)] duration-300 transition-all outline hover:bg-blue-hover active:bg-blue-active disabled:bg-slate-600"
         disabled={isLoading}
         value='Post!'
         type="submit"
