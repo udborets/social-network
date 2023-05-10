@@ -41,7 +41,7 @@ const PostsPage: FC = observer(() => {
     queryKey: ['allPosts'],
   })
   return (
-    <main className="w-full h-full sm:p-[100px] flex flex-col gap-4 justify-start items-center flex-grow">
+    <main className="w-full h-fit sm:p-[100px] flex flex-col gap-4 justify-start items-center flex-grow">
       {(posts && posts.length !== 0 &&
         posts.filter((post) => {
           if (friendsIds) {

@@ -24,7 +24,7 @@ const UserPage: FC = observer(() => {
     queryKey: ['usersPage']
   })
   return (
-    <main className="w-full h-full flex flex-col justify-start items-center gap-10 sm:p-[100px] flex-grow">
+    <main className="w-full h-fit flex flex-col justify-start items-center gap-10 sm:p-[100px] flex-grow">
       {users
         ? users.filter(({ id }) => id !== userState.info.id).map((userProps) => (
           <UserItem {...userProps} key={userProps.id} />

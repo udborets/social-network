@@ -43,7 +43,7 @@ const UserIdPage: FC = observer(() => {
     )
   }
   return (
-    <main className="w-full h-full flex flex-col sm:p-[100px] justify-start items-center">
+    <main className="w-full h-fit  flex flex-col sm:p-[100px] justify-start items-center">
       {userInfo.name}
       {userInfo
         ? <UserInfo userId={userInfo.id} />
