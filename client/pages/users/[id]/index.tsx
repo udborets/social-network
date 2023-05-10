@@ -19,7 +19,7 @@ const UserIdPage: FC = observer(() => {
       const id = router.query.id as string;
       try {
         const url = process.env.NEXT_PUBLIC_BACKEND_URL ?? ""
-        const fetchedUser = await axios.post<{ user: DBUser, OK: boolean }>(url + `/users/id`, { id })
+        const fetchedUser = await axios.post<{ user: DBUser, OK: boolean }>(url + `/users/id`, { id: id ?? userState.info.id })
         if (fetchedUser.data.OK) {
           return fetchedUser.data.user;
         }
@@ -48,7 +48,7 @@ const UserIdPage: FC = observer(() => {
       <Head>
         <title>Friends | {userInfo?.name ?? "User"}</title>
       </Head>
-      <main className="w-full h-fit  flex flex-col sm:p-[100px] justify-start items-center gap-20">
+      <main className="w-full h-fit flex flex-col sm:p-[100px] justify-start items-center gap-20">
         {userInfo
           ? <UserInfo userId={userInfo.id} />
           : ''}
