@@ -17,7 +17,6 @@ const UserInfo: FC<UserInfoProps> = observer(({ userId }) => {
       try {
         const fetchedUserInfo = await axios.post<{ user: DBUser }>((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + '/users/id', { id: userId });
         if (fetchedUserInfo.data) {
-          console.log(fetchedUserInfo.data.user)
           return fetchedUserInfo.data.user;
         }
       }

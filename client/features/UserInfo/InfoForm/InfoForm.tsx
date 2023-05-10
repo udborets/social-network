@@ -16,14 +16,12 @@ const InfoForm: FC = observer(() => {
   const submit = async (data: any) => {
     try {
       setIsLoading(true);
-      console.log(data)
       const a = await axios.post((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + '/users/update', {
         id: userState.info.id,
         univ: data.univ !== '' ? data.univ : null,
         age: data.age !== '' ? data.age : null,
         city: data.city !== '' ? data.city : null,
       });
-      console.log(a);
       setIsLoading(false);
       reset();
     }

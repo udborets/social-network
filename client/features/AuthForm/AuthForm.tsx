@@ -90,7 +90,7 @@ const AuthForm: FC = observer(() => {
       setFetchError(response.data.message);
     }
     catch (e: unknown) {
-      console.log(e);
+      console.error(e);
       if (e instanceof AxiosError) {
         setFetchError('Fetching error');
       }

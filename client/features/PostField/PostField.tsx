@@ -25,7 +25,6 @@ const PostField: FC = observer(() => {
       const uploadResult = await uploadBytes(imageRef, chosenFile);
       imageUrl = await getDownloadURL(uploadResult.ref);
     }
-    console.log(imageUrl)
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL ?? '';
     try {
       if (text || imageUrl) {

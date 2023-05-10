@@ -44,7 +44,6 @@ const App: FC<AppProps> = observer(({ Component, pageProps }) => {
   }, [router.asPath])
 
   useEffect(() => {
-    console.log(localStorageUser)
     if (localStorageUser.id !== '') {
       setUser(localStorageUser);
     }
