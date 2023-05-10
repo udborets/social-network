@@ -29,7 +29,6 @@ const UserIdPage: FC = observer(() => {
         console.error(e);
       }
     },
-    refetchInterval: 3000,
     queryKey: [`${router.query.id}`]
   })
   if (!userInfo?.id) {
