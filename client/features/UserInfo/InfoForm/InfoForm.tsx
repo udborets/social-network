@@ -18,7 +18,10 @@ const InfoForm: FC = observer(() => {
       setIsLoading(true);
       console.log(data)
       const a = await axios.post((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + '/users/update', {
-        id: userState.info.id, univ: data.univ, age: data.age, city: data.city
+        id: userState.info.id,
+        univ: data.univ !== '' ? data.univ : null,
+        age: data.age !== '' ? data.age : null,
+        city: data.city !== '' ? data.city : null,
       });
       console.log(a);
       setIsLoading(false);
@@ -41,6 +44,7 @@ const InfoForm: FC = observer(() => {
         placeholder="Enter your age..."
         registerFn={register}
         text="Age"
+        type='number'
       />
       <InfoInput
         name="city"
