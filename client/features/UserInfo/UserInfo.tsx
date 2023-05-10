@@ -36,7 +36,7 @@ const UserInfo: FC<UserInfoProps> = observer(({ userId }) => {
             alt="avatar image"
             width={100}
             height={100}
-            className="max-h-[100px] max-w-[100px] place-self-center"
+            className="max-h-[100px] max-w-[100px] place-self-center rounded-[50%]"
           />
           <InfoItem
             info={userInfo.name}
