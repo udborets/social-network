@@ -46,8 +46,8 @@ const PostField: FC = observer(() => {
       className="flex flex-col gap-2"
     >
       <textarea
-        placeholder="Enter post text text..."
-        className="outline max-w-[400px] outline-[var(--blue)]"
+        placeholder="Enter post text..."
+        className="outline max-w-[400px] outline-[var(--blue)] p-2 rounded-[10px]"
         {...register('text')}
       />
       <label htmlFor="">
