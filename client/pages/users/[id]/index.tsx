@@ -15,7 +15,7 @@ import { userState } from "@/store/User";
 
 const UserIdPage: FC = observer(() => {
   const router = useRouter();
-  const { data: userInfo } = useQuery({
+  const { data: userInfo, refetch } = useQuery({
     queryFn: async () => {
       const id = router.query.id as string;
       try {
@@ -53,7 +53,7 @@ const UserIdPage: FC = observer(() => {
           ? <UserInfo userId={userInfo.id} />
           : ''}
         {userInfo.id === userState.info.id
-          ? <PostField />
+          ? <PostField onPostFn={refetch} />
           : <FriendButton friendId={userInfo.id} />}
         {userInfo.posts.length !== 0
           ? <>
