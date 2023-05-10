@@ -7,8 +7,9 @@ import { v4 } from "uuid";
 
 import { storage } from "@/firebase";
 import { userState } from "@/store/User";
+import { PostFieldProps } from "./models";
 
-const PostField: FC = observer(() => {
+const PostField: FC<PostFieldProps> = observer(({ onPostFn }) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [chosenFile, setChosenFile] = useState<File>();
   const {
@@ -32,6 +33,8 @@ const PostField: FC = observer(() => {
         await axios.post(backendUrl + "/posts/create",
           { ownerId: userState.info.id, imageUrl: imageUrl, text: text });
         reset();
+        if (onPostFn)
+          onPostFn();
         setIsLoading(false);
       }
     }
