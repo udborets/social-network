@@ -33,11 +33,13 @@ const UserPage: FC = observer(() => {
         <span className="font-bold text-[3rem] text-center">
           All users
         </span>
-        {users
+        {(users && users.filter(({ id }) => id !== userState.info.id).length !== 0)
           ? users.filter(({ id }) => id !== userState.info.id).map((userProps) => (
             <UserItem {...userProps} key={userProps.id} />
           ))
-          : <div>There is no users yet :(</div>}
+          : <div className="font-bold text-[1.5rem]">
+            There is no users yet :(
+          </div>}
       </main>
     </>
   )

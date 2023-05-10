@@ -66,7 +66,7 @@ const PostsPage: FC = observer(() => {
           })} />
           : (
             <div className="flex flex-grow justify-center items-center">
-              <p className="">
+              <p className="font-bold text-[1.5rem]">
                 Your friends did not post anything yet
               </p>
             </div>)}
