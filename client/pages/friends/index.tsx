@@ -32,7 +32,8 @@ const FriendsPage: FC = observer(() => {
     queryKey: [`friendsPage${userState.info.id}`],
   })
   return (
-    <main className="w-full h-full flex flex-col gap-5">
+    <main className="w-full h-full flex flex-col sm:p-[100px] gap-10 justify-start items-center">
+      <span className="font-bold text-[3rem]">Your friends</span>
       {friends?.length !== 0
         ? friends?.map((userProps) => (
           <UserItem {...userProps} key={userProps.id} />
