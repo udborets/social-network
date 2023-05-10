@@ -9,13 +9,14 @@ import { v4 } from 'uuid';
 
 import avatarImage from '@/assets/avatarImage.png';
 import { DBUser } from "@/db/models";
-import BackToMyPageButton from "@/features/BackToMyPageButton/BackToMyPageButton";
+import BackToButton from "@/features/BackToButton/BackToButton";
 import { storage } from "@/firebase";
 import { useUserState } from "@/hooks/useUserState";
-import FormInput from "./FormInput/FormInput";
+import { userState } from "@/store/User";
 import LogoutButton from "../LogoutButton/LogoutButton";
-import { AuthTypes } from "./models";
 import SpinnerModalWindow from "../SpinnerModalWindow/SpinnerModalWindow";
+import FormInput from "./FormInput/FormInput";
+import { AuthTypes } from "./models";
 
 const AuthForm: FC = observer(() => {
   const router = useRouter();
@@ -47,9 +48,13 @@ const AuthForm: FC = observer(() => {
     return (
       <div className="flex flex-col justify-center items-center gap-4">
         <span className="text-[2rem]">
-          Logged in as {localStorageUser.name}
+          Logged in as {userState.info.name}
         </span>
-        <BackToMyPageButton className="text-[1.5rem]" />
+        <BackToButton
+          href={`/users/${userState.info.id}`}
+          className="text-[1.5rem]"
+          text='Back to my page!'
+        />
         <LogoutButton fn={() => setIsLogout(false)} className="text-[1.5rem]" />
       </div>
     )

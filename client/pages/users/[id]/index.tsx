@@ -6,7 +6,7 @@ import { FC } from "react";
 import { useQuery } from "react-query";
 
 import { DBUser } from "@/db/models";
-import BackToMyPageButton from "@/features/BackToMyPageButton/BackToMyPageButton";
+import BackToButton from "@/features/BackToButton/BackToButton";
 import FriendButton from "@/features/FriendButton/FriendButton";
 import PostField from "@/features/PostField/PostField";
 import UserInfo from "@/features/UserInfo/UserInfo";
@@ -42,7 +42,10 @@ const UserIdPage: FC = observer(() => {
             <h2>
               User not found
             </h2>
-            <BackToMyPageButton />
+            <BackToButton
+              text="Back to my page!"
+              href={`/users/${userState.info.id}`}
+            />
           </div>
         </main>
       </>
