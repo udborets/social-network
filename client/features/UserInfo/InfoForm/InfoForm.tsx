@@ -41,21 +41,18 @@ const InfoForm: FC = observer(() => {
         placeholder="Enter your age..."
         registerFn={register}
         text="Age"
-        type="number"
       />
       <InfoInput
         name="city"
         placeholder="Enter your city..."
         registerFn={register}
         text="City"
-        type="text"
       />
       <InfoInput
         name="univ"
         placeholder="Enter your university..."
         registerFn={register}
         text="University"
-        type="text"
       />
       <input
         type="submit"

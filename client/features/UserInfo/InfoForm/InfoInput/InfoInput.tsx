@@ -2,7 +2,7 @@ import { FC } from "react";
 
 import { InfoInputProps } from "./models";
 
-const InfoInput: FC<InfoInputProps> = ({ name, registerFn, text, placeholder, type }) => {
+const InfoInput: FC<InfoInputProps> = ({ name, registerFn, text, placeholder }) => {
   return (
     <label
       className="flex flex-col gap-1 font-bold"
@@ -13,7 +13,6 @@ const InfoInput: FC<InfoInputProps> = ({ name, registerFn, text, placeholder, ty
         placeholder={placeholder}
         className="p-1 rounded-[10px] outline outline-1 font-normal"
         {...registerFn(name)}
-        type={type}
       />
     </label>
   )
