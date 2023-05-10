@@ -12,7 +12,7 @@ import { DBUser } from "@/db/models";
 import BackToMyPageButton from "@/features/BackToMyPageButton/BackToMyPageButton";
 import { storage } from "@/firebase";
 import { useUserState } from "@/hooks/useUserState";
-import FormInput from "../FormInput/FormInput";
+import FormInput from "./FormInput/FormInput";
 import LogoutButton from "../LogoutButton/LogoutButton";
 import { AuthTypes } from "./models";
 import styles from './styles.module.scss';
