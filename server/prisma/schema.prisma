@@ -27,7 +27,6 @@ model Post {
   likes    Int     @default(0)
   text     String?
   imageUrl String?
-
   createdAt DateTime @default(now())
   likedBy   String[]
 }
