@@ -24,7 +24,7 @@ const UserInfo: FC<UserInfoProps> = observer(({ userId }) => {
         console.error(e);
       }
     },
-    refetchInterval: 5000,
+    refetchInterval: 10000,
     queryKey: [`userInfo${userId}`],
   })
   return (
