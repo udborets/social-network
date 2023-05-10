@@ -1,14 +1,14 @@
 import axios from "axios";
 import { observer } from "mobx-react-lite";
+import Image from "next/image";
+import { useRouter } from "next/router";
 import { FC, useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import Image from "next/image";
 
+import avatarImage from '@/assets/avatarImage.png';
 import { DBFriends } from "@/db/models";
 import { userState } from "@/store/User";
 import { UserItemProps } from "./models";
-import avatarImage from '@/assets/avatarImage.png';
-import { useRouter } from "next/router";
 
 const UserItem: FC<UserItemProps> = observer(({ id, name, avatarUrl }) => {
   const [isFriend, setIsFriend] = useState<boolean>(false);

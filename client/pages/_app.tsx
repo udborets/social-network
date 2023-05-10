@@ -1,5 +1,6 @@
 import { observer } from 'mobx-react-lite';
 import type { AppProps } from 'next/app';
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { FC, useEffect } from 'react';
 import { QueryClient, QueryClientProvider } from 'react-query';
@@ -10,7 +11,6 @@ import { useUserState } from '@/hooks/useUserState';
 import { routeState } from '@/store/Route';
 import { userState } from '@/store/User';
 import '@/styles/global.scss';
-import Head from 'next/head';
 
 const client = new QueryClient();
 

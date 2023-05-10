@@ -1,12 +1,12 @@
 import axios from "axios";
 import { observer } from "mobx-react-lite";
+import Head from "next/head";
 import { FC } from "react";
 import { useQuery } from "react-query";
 
 import { DBUser } from "@/db/models";
 import UserItem from "@/features/UserItem/UserItem";
 import { userState } from "@/store/User";
-import Head from "next/head";
 
 const UserPage: FC = observer(() => {
   const { data: users } = useQuery({

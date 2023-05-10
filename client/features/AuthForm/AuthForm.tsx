@@ -12,8 +12,8 @@ import { DBUser } from "@/db/models";
 import BackToMyPageButton from "@/features/BackToMyPageButton/BackToMyPageButton";
 import { storage } from "@/firebase";
 import { useUserState } from "@/hooks/useUserState";
-import LogoutButton from "../LogoutButton/LogoutButton";
 import FormInput from "../FormInput/FormInput";
+import LogoutButton from "../LogoutButton/LogoutButton";
 import { AuthTypes } from "./models";
 import styles from './styles.module.scss';
 
@@ -208,7 +208,7 @@ const AuthForm: FC = observer(() => {
       </form>
       {isLoading
         ? <div className={`absolute w-screen h-screen left-0 top-0 grid place-items-center z-[10] bg-[#00000086]`}>
-          <div className={`${styles.spinner}`} /> 
+          <div className={`${styles.spinner}`} />
         </div>
         : ''}
     </>

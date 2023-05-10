@@ -1,12 +1,12 @@
 import axios from "axios";
 import { observer } from "mobx-react-lite";
-import { useState } from "react";
+import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { userState } from "@/store/User";
 import InfoInput from "./InfoInput/InfoInput";
 
-const InfoForm = observer(() => {
+const InfoForm: FC = observer(() => {
   const {
     register,
     handleSubmit,

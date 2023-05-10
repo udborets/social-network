@@ -28,7 +28,7 @@ const PostField: FC = observer(() => {
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL ?? '';
     try {
       if (text || imageUrl) {
-        const createdPost = await axios.post(backendUrl + "/posts/create",
+        await axios.post(backendUrl + "/posts/create",
           { ownerId: userState.info.id, imageUrl: imageUrl, text: text });
         reset();
       }

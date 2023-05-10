@@ -1,4 +1,4 @@
 export type InfoItemProps = {
-  text?: string ;
+  text?: string;
   info?: string | number | null;
-}
+};

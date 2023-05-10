@@ -1,6 +1,7 @@
-import { FC } from "react"
-import { UserPostsProps } from "./models"
-import Post from "./Post/Post"
+import { FC } from "react";
+
+import { UserPostsProps } from "./models";
+import Post from "./Post/Post";
 
 const UserPosts: FC<UserPostsProps> = ({ posts }) => {
   return (

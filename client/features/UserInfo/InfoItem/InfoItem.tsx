@@ -1,5 +1,6 @@
-import { FC } from "react"
-import { InfoItemProps } from "./models"
+import { FC } from "react";
+
+import { InfoItemProps } from "./models";
 
 const InfoItem: FC<InfoItemProps> = ({ info, text }) => {
   if (!text || !info) {

@@ -1,5 +1,6 @@
-import { FC } from "react"
-import { InfoInputProps } from "./models"
+import { FC } from "react";
+
+import { InfoInputProps } from "./models";
 
 const InfoInput: FC<InfoInputProps> = ({ name, registerFn, text, placeholder, type }) => {
   return (
@@ -11,8 +12,7 @@ const InfoInput: FC<InfoInputProps> = ({ name, registerFn, text, placeholder, ty
       <input
         placeholder={placeholder}
         className="p-1 rounded-[10px] outline outline-1 font-normal"
-        {...registerFn(name, {
-        })}
+        {...registerFn(name)}
         type={type}
       />
     </label>

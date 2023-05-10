@@ -6,10 +6,10 @@ import { useQuery } from "react-query";
 
 import avatarImage from '@/assets/avatarImage.png';
 import { DBUser } from "@/db/models";
-import InfoItem from "./InfoItem/InfoItem";
-import { UserInfoProps } from "./models";
 import { userState } from "@/store/User";
 import InfoForm from "./InfoForm/InfoForm";
+import InfoItem from "./InfoItem/InfoItem";
+import { UserInfoProps } from "./models";
 
 const UserInfo: FC<UserInfoProps> = observer(({ userId }) => {
   const { data: userInfo } = useQuery({

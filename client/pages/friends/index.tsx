@@ -1,5 +1,6 @@
 import axios from "axios";
 import { observer } from "mobx-react-lite";
+import Head from "next/head";
 import { FC } from "react";
 import { useQuery } from "react-query";
 
@@ -7,7 +8,6 @@ import { DBFriends, DBUser } from "@/db/models";
 import CheckOutOtherUsersButton from "@/features/CheckOutOtherUsersButton/CheckOutOtherUsersButton";
 import UserItem from "@/features/UserItem/UserItem";
 import { userState } from "@/store/User";
-import Head from "next/head";
 
 const FriendsPage: FC = observer(() => {
   const { data: friends } = useQuery({

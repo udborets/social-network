@@ -1,8 +1,9 @@
 import Head from "next/head";
+import { FC } from "react";
 
 import AuthForm from "@/features/AuthForm/AuthForm";
 
-const AuthPage = () => {
+const AuthPage: FC = () => {
   return (
     <>
       <Head>
