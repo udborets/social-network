@@ -15,7 +15,7 @@ import { useUserState } from "@/hooks/useUserState";
 import FormInput from "./FormInput/FormInput";
 import LogoutButton from "../LogoutButton/LogoutButton";
 import { AuthTypes } from "./models";
-import styles from './styles.module.scss';
+import SpinnerModalWindow from "../SpinnerModalWindow/SpinnerModalWindow";
 
 const AuthForm: FC = observer(() => {
   const router = useRouter();
@@ -207,9 +207,7 @@ const AuthForm: FC = observer(() => {
         </div>
       </form>
       {isLoading
-        ? <div className={`absolute w-screen h-screen left-0 top-0 grid place-items-center z-[10] bg-[#00000086]`}>
-          <div className={`${styles.spinner}`} />
-        </div>
+        ? <SpinnerModalWindow />
         : ''}
     </>
   )
