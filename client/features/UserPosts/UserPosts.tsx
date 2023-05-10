@@ -4,13 +4,12 @@ import Post from "./Post/Post"
 
 const UserPosts: FC<UserPostsProps> = ({ posts }) => {
   return (
-    <ul className="flex flex-col gap-8 sm:px-[100px] sm:py-[50px] rounded-[10px] bg-slate-50">
+    <ul className="flex flex-col gap-8 max-w-[80%] w-full rounded-[10px] bg-slate-50 mb-[200px]">
       {posts
         .sort((b, a) => (new Date(a.createdAt ?? Date.now())).getTime()
           - (new Date(b.createdAt ?? Date.now())).getTime())
         .map((postProps) => (
           <li
-            className="w-fit h-fit"
             key={postProps.id}
           >
             <Post

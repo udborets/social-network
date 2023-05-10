@@ -30,7 +30,7 @@ const UserItem: FC<UserItemProps> = observer(({ id, name }) => {
     refetch();
   }, [])
   return (
-    <div className="w-full max-w-[500px] max-h-[100px] h-full bg-slate-300 rounded-[20px] p-5 flex gap-4 justify-between items-center">
+    <div className="w-full max-w-[80%] max-h-[100px] h-full bg-slate-300 rounded-[20px] p-5 flex gap-4 justify-between items-center">
       <span className="font-bold text-[1.4rem] w-full text-center">
         {name}
       </span>
@@ -39,7 +39,7 @@ const UserItem: FC<UserItemProps> = observer(({ id, name }) => {
         className={`${isFriend
           ? 'hover:bg-red-600 active:bg-red-900 outline-red-400'
           : 'hover:bg-blue-hover active:bg-blue-active outline-[var(--blue)]'} disabled:bg-[#00000096] outline rounded-[10px] p-2 bg-white 
-          duration-300 transition-all hover:text-white active:text-white min-h-[50px] min-w-[150px]`}
+          duration-300 transition-all hover:text-white active:text-white min-h-[50px] w-full max-w-[150px]`}
         onClick={async () => {
           if (!isFriend) {
             setIsLoading(true);
