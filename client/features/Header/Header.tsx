@@ -10,7 +10,7 @@ const Header: FC<HeaderProps> = observer(({ navLinks }) => {
     <header className="w-full h-full md:px-[100px] flex-wrap md:flex-nowrap max-h-[150px] min-h-[100px] flex flex-grow justify-center items-center">
       <h2 className="w-fit h-fit text-[2rem] text-blue font-bold">
         <Link href='/'>
-          Friends
+          MyFriends
         </Link>
       </h2>
       <span className="mx-2 sm:mx-10 w-[2px] h-[30%] bg-blue" />

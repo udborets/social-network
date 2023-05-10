@@ -11,7 +11,6 @@ const HomePage: FC = observer(() => {
       className={`grid place-items-center min-w-full w-full min-h-[calc(100vh-100px)]`}
     >
       <div className="flex flex-col gap-4 justify-center items-center">
-
         <h1 className="text-[2rem] md:text-[3rem] mb-[50px] text-blue font-bold text-center">
           Welcome to MyFriends
         </h1>

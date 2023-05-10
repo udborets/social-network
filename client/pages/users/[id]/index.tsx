@@ -32,7 +32,10 @@ const UserIdPage: FC = observer(() => {
     queryKey: [`${router.query.id}`]
   })
   if (!userInfo?.id) {
-    return (
+    return (<>
+      <Head>
+        <title>MyFriends | Not found</title>
+      </Head>
       <main className="w-full h-full grid place-items-center font-bold text-[1.5rem]">
         <div className="flex flex-col justify-center items-center gap-4">
           <h2>
@@ -41,12 +44,13 @@ const UserIdPage: FC = observer(() => {
           <BackToMyPageButton />
         </div>
       </main>
+    </>
     )
   }
   return (
     <>
       <Head>
-        <title>Friends | {userInfo?.name ?? "User"}</title>
+        <title>MyFriends | {userInfo?.name ?? "User"}</title>
       </Head>
       <main className="w-full h-fit flex flex-col sm:p-[100px] justify-start items-center gap-20">
         {userInfo

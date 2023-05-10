@@ -43,7 +43,7 @@ const PostsPage: FC = observer(() => {
   return (
     <>
       <Head>
-        <title>Friends | Posts</title>
+        <title>MyFriends | Posts</title>
       </Head>
       <main className="w-full h-fit sm:p-[100px] flex flex-col gap-4 justify-start items-center flex-grow">
         <span className="font-bold text-[3rem] text-center">

@@ -54,7 +54,7 @@ const App: FC<AppProps> = observer(({ Component, pageProps }) => {
   return (
     <>
       <Head>
-        <title>Friends</title>
+        <title>MyFriends</title>
       </Head>
       <QueryClientProvider client={client}>
         <Header {...headerProps} />

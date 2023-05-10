@@ -28,7 +28,7 @@ const UserPage: FC = observer(() => {
   return (
     <>
       <Head>
-        <title>Friends | Users</title>
+        <title>MyFriends | Users</title>
       </Head>
       <main className="w-full h-fit flex flex-col justify-start items-center gap-10 sm:p-[100px] flex-grow">
         <div className="flex flex-col justify-center items-center gap-4">

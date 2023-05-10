@@ -7,7 +7,7 @@ const AuthPage: FC = () => {
   return (
     <>
       <Head>
-        <title>Friends | Auth</title>
+        <title>MyFriends | Auth</title>
       </Head>
       <main className="w-full h-[calc(100vh-100px)] grid sm:p-[100px] place-items-center">
         <AuthForm />
