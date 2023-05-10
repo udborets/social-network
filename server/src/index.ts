@@ -267,7 +267,9 @@ app.post(
           id: req.body.id,
         },
         data: {
-          likedBy: req.body.likedBy ?? oldPostInfo?.likedBy ?? null,
+          likedBy: {
+            set: [...(req.body?.likedBy ?? oldPostInfo.likedBy)],
+          },
         },
         include: {
           owner: true,
