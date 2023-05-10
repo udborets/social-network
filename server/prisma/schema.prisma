@@ -16,7 +16,7 @@ model User {
   avatarUrl String?
   univ      String?
   city      String?
-  age       Int?
+  age       String?
   createdAt DateTime @default(now())
 }
 
