@@ -259,12 +259,17 @@ app.post(
     res
   ) => {
     try {
+      const oldPostInfo = await db.post.findUnique({
+        where: {
+          id: req.body.id,
+        },
+      });
       const updatedPost = await db.post.update({
         where: {
           id: req.body.id,
         },
         data: {
-          likedBy: req.body.likedBy ?? [],
+          likedBy: req.body.likedBy ?? oldPostInfo?.likedBy,
         },
         include: {
           owner: true,
