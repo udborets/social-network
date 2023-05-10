@@ -8,7 +8,7 @@ const AuthPage = () => {
       <Head>
         <title>Friends | Auth</title>
       </Head>
-      <main className="w-full h-full grid sm:p-[100px] place-items-center">
+      <main className="w-full h-[calc(100vh-100px)] grid sm:p-[100px] place-items-center">
         <AuthForm />
       </main>
     </>

@@ -6,6 +6,7 @@ import { useQuery } from "react-query";
 import { DBUser } from "@/db/models";
 import UserItem from "@/features/UserItem/UserItem";
 import { userState } from "@/store/User";
+import Head from "next/head";
 
 const UserPage: FC = observer(() => {
   const { data: users } = useQuery({
@@ -24,13 +25,21 @@ const UserPage: FC = observer(() => {
     queryKey: ['usersPage']
   })
   return (
-    <main className="w-full h-fit flex flex-col justify-start items-center gap-10 sm:p-[100px] flex-grow">
-      {users
-        ? users.filter(({ id }) => id !== userState.info.id).map((userProps) => (
-          <UserItem {...userProps} key={userProps.id} />
-        ))
-        : <div>There is no users yet :(</div>}
-    </main>
+    <>
+      <Head>
+        <title>Friends | Users</title>
+      </Head>
+      <main className="w-full h-fit flex flex-col justify-start items-center gap-10 sm:p-[100px] flex-grow">
+        <span className="font-bold text-[3rem] text-center">
+          All users
+        </span>
+        {users
+          ? users.filter(({ id }) => id !== userState.info.id).map((userProps) => (
+            <UserItem {...userProps} key={userProps.id} />
+          ))
+          : <div>There is no users yet :(</div>}
+      </main>
+    </>
   )
 })
 

@@ -7,6 +7,7 @@ import { DBFriends, DBUser } from "@/db/models";
 import CheckOutOtherUsersButton from "@/features/CheckOutOtherUsersButton/CheckOutOtherUsersButton";
 import UserItem from "@/features/UserItem/UserItem";
 import { userState } from "@/store/User";
+import Head from "next/head";
 
 const FriendsPage: FC = observer(() => {
   const { data: friends } = useQuery({
@@ -32,15 +33,22 @@ const FriendsPage: FC = observer(() => {
     queryKey: [`friendsPage${userState.info.id}`],
   })
   return (
-    <main className="w-full h-fit flex-grow flex flex-col sm:p-[100px] gap-10 justify-start items-center">
-      <span className="font-bold text-[3rem]">Your friends</span>
-      {friends?.length !== 0
-        ? friends?.map((userProps) => (
-          <UserItem {...userProps} key={userProps.id} />
-        ))
-        : ''}
-      <CheckOutOtherUsersButton />
-    </main>
+    <>
+      <Head>
+        <title>Friends | Friends</title>
+      </Head>
+      <main className="w-full h-fit flex-grow flex flex-col sm:p-[100px] gap-10 justify-start items-center">
+        <span className="font-bold text-[3rem] text-center">
+          Your friends
+        </span>
+        {friends?.length !== 0
+          ? friends?.map((userProps) => (
+            <UserItem {...userProps} key={userProps.id} />
+          ))
+          : ''}
+        <CheckOutOtherUsersButton />
+      </main>
+    </>
   )
 })
 

@@ -10,6 +10,7 @@ import { useUserState } from '@/hooks/useUserState';
 import { routeState } from '@/store/Route';
 import { userState } from '@/store/User';
 import '@/styles/global.scss';
+import Head from 'next/head';
 
 const client = new QueryClient();
 
@@ -53,6 +54,9 @@ const App: FC<AppProps> = observer(({ Component, pageProps }) => {
   }, [])
   return (
     <>
+      <Head>
+        <title>Friends</title>
+      </Head>
       <QueryClientProvider client={client}>
         <Header {...headerProps} />
         <Component {...pageProps} />

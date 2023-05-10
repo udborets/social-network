@@ -7,7 +7,7 @@ import Navbar from "./Navbar/Navbar";
 
 const Header: FC<HeaderProps> = observer(({ navLinks }) => {
   return (
-    <header className="w-full h-full md:px-[100px] flex-wrap md:flex-nowrap max-h-[100px] min-h-[100px] flex flex-grow justify-center items-center">
+    <header className="w-full h-full md:px-[100px] flex-wrap md:flex-nowrap max-h-[150px] min-h-[100px] flex flex-grow justify-center items-center">
       <h2 className="w-fit h-fit text-[2rem] text-blue font-bold">
         <Link href='/'>
           MyFriends
