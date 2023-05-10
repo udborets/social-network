@@ -9,6 +9,7 @@ import { storage } from "@/firebase";
 import { userState } from "@/store/User";
 
 const PostField: FC = observer(() => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [chosenFile, setChosenFile] = useState<File>();
   const {
     register,
@@ -28,9 +29,11 @@ const PostField: FC = observer(() => {
     const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL ?? '';
     try {
       if (text || imageUrl) {
+        setIsLoading(true);
         await axios.post(backendUrl + "/posts/create",
           { ownerId: userState.info.id, imageUrl: imageUrl, text: text });
         reset();
+        setIsLoading(false);
       }
     }
     catch (e) {
@@ -44,7 +47,7 @@ const PostField: FC = observer(() => {
     >
       <textarea
         placeholder="Enter post text text..."
-        className="outline-1 outline max-w-[400px] "
+        className="outline max-w-[400px] outline-[var(--blue)]"
         {...register('text')}
       />
       <label htmlFor="">
@@ -55,7 +58,8 @@ const PostField: FC = observer(() => {
         />
       </label>
       <input
-        className=""
+        className="p-2 rounded-[10px] outline-[var(--blue)] outline hover:bg-blue-hover active:bg-blue-active disabled:bg-slate-600"
+        disabled={isLoading}
         value='Post!'
         type="submit"
       />
