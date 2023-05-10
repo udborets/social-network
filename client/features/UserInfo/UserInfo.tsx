@@ -29,7 +29,7 @@ const UserInfo: FC<UserInfoProps> = observer(({ userId }) => {
     queryKey: [`userInfo${userId}`],
   })
   return (
-    <div className="w-full h-fit flex flex-wrap justify-around gap-10">
+    <div className="w-full h-fit flex flex-wrap justify-center gap-10 sm:gap-20 mt-[50px]">
       {userInfo
         ? <div className="flex flex-col gap-4">
           <Image
@@ -37,7 +37,7 @@ const UserInfo: FC<UserInfoProps> = observer(({ userId }) => {
             alt="avatar image"
             width={100}
             height={100}
-            className="max-h-[100px] max-w-[100px]"
+            className="max-h-[100px] max-w-[100px] place-self-center"
           />
           <InfoItem
             info={userInfo.name}
