@@ -22,8 +22,7 @@ app.post(
     res
   ) => {
     try {
-      console.log(req.body.id);
-      const foundEmail = await db.user.findUnique({
+      const foundEmail = await db.user.findMany({
         where: {
           email: req.body.email,
         },
@@ -31,7 +30,7 @@ app.post(
           posts: true,
         },
       });
-      const foundName = await db.user.findUnique({
+      const foundName = await db.user.findMany({
         where: {
           name: req.body.name,
         },
@@ -39,7 +38,7 @@ app.post(
           posts: true,
         },
       });
-      if (!foundEmail && !foundName) {
+      if (!foundEmail.length && !foundName.length) {
         const createdUser = await db.user.create({
           data: {
             id: req.body.id,
@@ -91,7 +90,6 @@ app.post("/users/id", async (req: TypedRequestBody<{ id: string }>, res) => {
       where: { id: req.body.id },
       include: { posts: true },
     });
-    console.log(foundUser);
     if (!foundUser) {
       return res.send({
         user: null,
@@ -186,7 +184,7 @@ app.post(
     req: TypedRequestBody<{
       id: string;
       avatarUrl: string;
-      age?: number;
+      age?: string;
       city?: string;
       univ?: string;
     }>,
@@ -195,9 +193,6 @@ app.post(
     const oldUserInfo = await db.user.findUnique({
       where: {
         id: req.body.id,
-      },
-      include: {
-        posts: true,
       },
     });
     if (!oldUserInfo) {
