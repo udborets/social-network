@@ -27,7 +27,6 @@ const HomePage: FC = observer(() => {
             : 'Go to auth page'}
         </Link>
       </div>
-
     </main>
   )
 })
