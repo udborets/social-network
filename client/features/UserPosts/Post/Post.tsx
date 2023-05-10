@@ -45,20 +45,34 @@ const Post: FC<DBPost> = observer((
   return (
     <>
       <div className="bg-white rounded-[20px] p-4 max-w-full w-full outline text-black outline-[var(--blue)] flex flex-col gap-4 items-center">
-        <h4
-          className="font-bold text-center w-full text-[1.2rem] flex justify-end items-start gap-6"
-          onClick={() => router.push(`/users/${owner?.id ?? userState.info.id}`)}
-        >
-          {owner?.name ?? 'User'}
-          <Image
-            src={owner?.avatarUrl ?? avatarImage}
-            priority
-            alt="avatar image"
-            className="w-[50px] h-[50px] rounded-[50%] self-center"
-            width={50}
-            height={50}
-          />
-        </h4>
+        {owner?.id === userState.info.id
+          ? <h4
+            className="font-bold text-center w-full text-[1.2rem] flex justify-end items-start gap-6"
+          >
+            {userState.info.name}
+            <Image
+              src={owner?.avatarUrl ?? avatarImage}
+              priority
+              alt="avatar image"
+              className="w-[50px] h-[50px] rounded-[50%] self-center"
+              width={50}
+              height={50}
+            />
+          </h4>
+          : <h4
+            className="font-bold text-center w-full text-[1.2rem] flex justify-end items-start gap-6"
+            onClick={() => router.push(`/users/${owner?.id ?? userState.info.id}`)}
+          >
+            {owner?.name ?? 'User'}
+            <Image
+              src={owner?.avatarUrl ?? avatarImage}
+              priority
+              alt="avatar image"
+              className="w-[50px] h-[50px] rounded-[50%] self-center"
+              width={50}
+              height={50}
+            />
+          </h4>}
         <p className="mt-[20px] max-w-[90%] w-full text-left">
           {text}
         </p>
