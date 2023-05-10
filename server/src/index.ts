@@ -1,8 +1,8 @@
 import cors from "cors";
 import express from "express";
 
-import { db } from "./db";
-import { TypedRequestBody } from "./models";
+import { db } from "./db/index.js";
+import { TypedRequestBody } from "./models.js";
 
 const app = express();
 
@@ -251,9 +251,7 @@ app.post(
   async (
     req: TypedRequestBody<{
       id: string;
-      currentLikes: number;
       likedBy: string[];
-      isLiked: boolean;
       userId: string;
     }>,
     res
@@ -269,7 +267,7 @@ app.post(
           id: req.body.id,
         },
         data: {
-          likedBy: req.body.likedBy ?? oldPostInfo?.likedBy,
+          likedBy: req.body.likedBy ?? oldPostInfo?.likedBy ?? null,
         },
         include: {
           owner: true,
