@@ -62,7 +62,7 @@ const InfoForm: FC<InfoFormProps> = observer(({ refetchInfoFn }) => {
         type="submit"
         value="Update my info"
         disabled={isLoading}
-        className="outline-[var(--blue)] outline hover:bg-blue-hover hover:text-white disabled:bg-slate-800 mt-[10px] px-1 py-2 rounded-[20px]"
+        className="outline-[var(--blue)] outline duration-300 transition-all hover:bg-blue-hover hover:text-white disabled:bg-slate-800 mt-[10px] px-1 py-2 rounded-[20px]"
       />
     </form>
   )
