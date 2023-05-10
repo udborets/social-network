@@ -82,6 +82,7 @@ const AuthForm: FC = observer(() => {
           router.push(`/users/${response.data.user.id}`);
           return;
         }
+        setIsLoading(false);
         router.push(`/users/${response.data.user.id}`);
         reset();
         return;
