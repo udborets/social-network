@@ -34,7 +34,7 @@ const PostField: FC<PostFieldProps> = observer(({ onPostFn }) => {
           { ownerId: userState.info.id, imageUrl: imageUrl, text: text });
         reset();
         if (onPostFn)
-          onPostFn();
+          await onPostFn();
         setIsLoading(false);
       }
     }
