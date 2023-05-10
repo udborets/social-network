@@ -1,5 +1,6 @@
 import axios from "axios";
 import { observer } from "mobx-react-lite";
+import Head from "next/head";
 import { useRouter } from "next/router";
 import { FC } from "react";
 import { useQuery } from "react-query";
@@ -10,7 +11,6 @@ import PostField from "@/features/PostField/PostField";
 import UserInfo from "@/features/UserInfo/UserInfo";
 import UserPosts from "@/features/UserPosts/UserPosts";
 import { userState } from "@/store/User";
-import Head from "next/head";
 
 const UserIdPage: FC = observer(() => {
   const router = useRouter();
@@ -48,15 +48,14 @@ const UserIdPage: FC = observer(() => {
       <Head>
         <title>Friends | {userInfo?.name ?? "User"}</title>
       </Head>
-      <main className="w-full h-fit  flex flex-col sm:p-[100px] justify-start items-center">
-        {userInfo.name}
+      <main className="w-full h-fit  flex flex-col sm:p-[100px] justify-start items-center gap-20">
         {userInfo
           ? <UserInfo userId={userInfo.id} />
           : ''}
         {userInfo.id === userState.info.id
           ? <PostField />
           : ''}
-        {userInfo.posts
+        {userInfo.posts.length !== 0
           ? <UserPosts
             posts={userInfo.posts}
           />
