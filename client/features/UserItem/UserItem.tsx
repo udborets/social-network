@@ -35,7 +35,7 @@ const UserItem: FC<UserItemProps> = observer(({ id, name, avatarUrl }) => {
   }, [])
   return (
     <div
-      className="w-full max-w-[80%] max-h-[100px] h-full bg-slate-300 rounded-[20px] p-5 flex gap-4 justify-between items-center"
+      className="max-w-[500px] min-w-fit w-full max-h-[100px] h-full bg-slate-300 rounded-[20px] p-5 flex gap-4 justify-between items-center"
       onClick={() => router.push(`/users/${id}`)}
     >
       <Image
