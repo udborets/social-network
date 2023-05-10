@@ -8,7 +8,7 @@ const InfoItem: FC<InfoItemProps> = ({ info, text }) => {
     )
   }
   return (
-    <label className="flex flex-col font-bold text-[1.1rem]">
+    <label className="flex gap-2 font-bold text-[1.1rem]">
       {text}:
       <span className="font-normal">
         {info}
