@@ -12,7 +12,7 @@ import InfoItem from "./InfoItem/InfoItem";
 import { UserInfoProps } from "./models";
 
 const UserInfo: FC<UserInfoProps> = observer(({ userId }) => {
-  const { data: userInfo } = useQuery({
+  const { data: userInfo, refetch } = useQuery({
     queryFn: async () => {
       try {
         const fetchedUserInfo = await axios.post<{ user: DBUser }>((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + '/users/id', { id: userId });
@@ -57,7 +57,7 @@ const UserInfo: FC<UserInfoProps> = observer(({ userId }) => {
         </div>
         : ''}
       {userState.info.id === userInfo?.id
-        ? <InfoForm />
+        ? <InfoForm refetchInfoFn={refetch} />
         : ''}
     </div>
   )

@@ -5,8 +5,9 @@ import { useForm } from "react-hook-form";
 
 import { userState } from "@/store/User";
 import InfoInput from "./InfoInput/InfoInput";
+import { InfoFormProps } from "./models";
 
-const InfoForm: FC = observer(() => {
+const InfoForm: FC<InfoFormProps> = observer(({ refetchInfoFn }) => {
   const {
     register,
     handleSubmit,
@@ -16,13 +17,14 @@ const InfoForm: FC = observer(() => {
   const submit = async (data: any) => {
     try {
       setIsLoading(true);
-      const a = await axios.post((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + '/users/update', {
+      await axios.post((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + '/users/update', {
         id: userState.info.id,
         univ: data.univ !== '' ? data.univ : null,
         age: data.age !== '' ? data.age : null,
         city: data.city !== '' ? data.city : null,
       });
       setIsLoading(false);
+      refetchInfoFn();
       reset();
     }
     catch (e) {
