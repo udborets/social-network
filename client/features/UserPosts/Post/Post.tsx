@@ -45,7 +45,7 @@ const Post: FC<DBPost> = observer((
     <div className="bg-white rounded-[20px] p-4 max-w-full w-full outline text-black outline-[var(--blue)] flex flex-col gap-4 items-center">
       <h4
         className="font-bold text-center w-full text-[1.2rem] flex justify-end items-start gap-6"
-        onClick={() => router.push(`/users/${owner.id ?? ""}`)}
+        onClick={() => router.push(`/users/${owner?.id ?? userState.info.id}`)}
       >
         {owner?.name ?? 'User'}
         <Image
