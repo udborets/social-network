@@ -62,13 +62,13 @@ app.post(
           message: "",
         });
       }
-      if (foundName) {
+      if (!foundName.length) {
         return res.send({
           OK: false,
           message: "This username is already taken",
         });
       }
-      if (foundEmail) {
+      if (!foundEmail.length) {
         return res.send({
           OK: false,
           message: "This email is already taken",
