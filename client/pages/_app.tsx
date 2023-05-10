@@ -47,8 +47,8 @@ const App: FC<AppProps> = observer(({ Component, pageProps }) => {
     if (localStorageUser.id !== '') {
       setUser(localStorageUser);
     }
-    if (userState.info.id === '') {
-      router.push('/auth');
+    if (localStorageUser.id === '') {
+      router.push('/');
     }
   }, [])
   return (
