@@ -18,8 +18,9 @@ const FriendButton: FC<FriendButtonProps> = ({ friendId }) => {
       try {
         const fetchedFriends = await axios.post<{ friends: DBFriends[] }>((process.env.NEXT_PUBLIC_BACKEND_URL ?? "") + '/friends');
         if (fetchedFriends.data) {
-          setIsFriend(fetchedFriends.data.friends.filter(({ friendId, userId }) => (
-            (friendId === friendId && userId === userState.info.id) || (friendId === userState.info.id && friendId === userId)
+          setIsFriend(fetchedFriends.data.friends.filter(({ friendId: filterFriendId, userId: filterUserId }) => (
+            (friendId === filterFriendId && filterUserId === userState.info.id) ||
+            (filterFriendId === userState.info.id && friendId === filterUserId)
           )).length !== 0);
         }
       }
